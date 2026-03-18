@@ -1,15 +1,12 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
-import io.github.apace100.origins.Origins;
 import io.github.apace100.originsclasses.ducks.SneakingStateSavingManager;
 import io.github.apace100.originsclasses.networking.ModPackets;
 import io.github.apace100.originsclasses.power.MultiMinePower;
-import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
@@ -44,9 +41,7 @@ public abstract class ServerPlayerInteractionManagerMixin implements SneakingSta
     @Inject(method = "processBlockBreakingAction", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;onBlockBreakStart(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;)V", ordinal = 0))
     private void saveSneakingState(BlockPos pos, PlayerActionC2SPacket.Action action, Direction direction, int worldHeight, int sequence, CallbackInfo ci) {
         wasSneakingWhenStarted = player.isSneaking();
-        PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-        data.writeBoolean(!wasSneakingWhenStarted);
-        ServerPlayNetworking.send(player, ModPackets.MULTI_MINING, data);
+        ServerPlayNetworking.send(player, new ModPackets.MultiMiningPayload(!wasSneakingWhenStarted));
     }
 
     @Inject(method = "finishMining", at = @At("HEAD"))
