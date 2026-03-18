@@ -8,5 +8,5 @@ import net.minecraft.util.Identifier;
 
 public class ClassesTags {
 
-    public static final TagKey<Item> MERCHANT_BLACKLIST = TagKey.of(RegistryKeys.ITEM, new Identifier(OriginsClasses.MODID, "merchant_blacklist"));
+    public static final TagKey<Item> MERCHANT_BLACKLIST = TagKey.of(RegistryKeys.ITEM, Identifier.of(OriginsClasses.MODID, "merchant_blacklist"));
 }

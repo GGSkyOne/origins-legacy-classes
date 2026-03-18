@@ -12,46 +12,46 @@ import java.util.*;
 public class ClassPowerTypes {
 
     // Rogue
-    public static final PowerType<Power> SNEAKY = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "sneaky"));
-    public static final PowerType<VariableIntPower> STEALTH = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "stealth"));//new PowerType<>((type, player) -> new VariableIntPower(type, player, 0, 0, 200));
+    public static final PowerType<Power> SNEAKY = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"sneaky"));
+    public static final PowerType<VariableIntPower> STEALTH = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"stealth"));//new PowerType<>((type, player) -> new VariableIntPower(type, player, 0, 0, 200));
 
     // Warrior
-    public static final PowerType<Power> LESS_SHIELD_SLOWDOWN = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "less_shield_slowdown"));
+    public static final PowerType<Power> LESS_SHIELD_SLOWDOWN = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"less_shield_slowdown"));
     /*public static final PowerType<AttributePower> MORE_ATTACK_DAMAGE = new PowerType<>((type, player) -> {
         return new AttributePower(type, player, EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier("Warrior attack bonus", 1.0, EntityAttributeModifier.Operation.ADDITION));
     });*/
 
     // Ranger
-    public static final PowerType<Power> LESS_BOW_SLOWDOWN = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "less_bow_slowdown"));
-    public static final PowerType<Power> NO_PROJECTILE_DIVERGENCE = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "no_projectile_divergence"));
+    public static final PowerType<Power> LESS_BOW_SLOWDOWN = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"less_bow_slowdown"));
+    public static final PowerType<Power> NO_PROJECTILE_DIVERGENCE = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_projectile_divergence"));
 
     // Beastmaster
-    public static final PowerType<Power> TAMED_ANIMAL_BOOST = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "tamed_animal_boost"));
-    public static final PowerType<Power> TAMED_POTION_DIFFUSAL = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "tamed_potion_diffusal"));
+    public static final PowerType<Power> TAMED_ANIMAL_BOOST = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"tamed_animal_boost"));
+    public static final PowerType<Power> TAMED_POTION_DIFFUSAL = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"tamed_potion_diffusal"));
 
     // Cook
-    public static final PowerType<Power> MORE_SMOKER_XP = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "more_smoker_xp"));
-    public static final PowerType<Power> BETTER_CRAFTED_FOOD = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "better_crafted_food"));
+    public static final PowerType<Power> MORE_SMOKER_XP = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_smoker_xp"));
+    public static final PowerType<Power> BETTER_CRAFTED_FOOD = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"better_crafted_food"));
 
     // Cleric
-    public static final PowerType<Power> LONGER_POTIONS = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "longer_potions"));
-    public static final PowerType<Power> BETTER_ENCHANTING = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "better_enchanting"));
+    public static final PowerType<Power> LONGER_POTIONS = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"longer_potions"));
+    public static final PowerType<Power> BETTER_ENCHANTING = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"better_enchanting"));
 
     // Blacksmith
-    public static final PowerType<Power> QUALITY_EQUIPMENT = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "quality_equipment"));
-    public static final PowerType<Power> EFFICIENT_REPAIRS = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "efficient_repairs"));
+    public static final PowerType<Power> QUALITY_EQUIPMENT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"quality_equipment"));
+    public static final PowerType<Power> EFFICIENT_REPAIRS = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"efficient_repairs"));
 
     // Farmer
-    public static final PowerType<Power> MORE_CROP_DROPS = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "more_crop_drops"));
-    public static final PowerType<Power> BETTER_BONE_MEAL = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "better_bone_meal"));
+    public static final PowerType<Power> MORE_CROP_DROPS = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_crop_drops"));
+    public static final PowerType<Power> BETTER_BONE_MEAL = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"better_bone_meal"));
 
     // Rancher
-    public static final PowerType<Power> TWIN_BREEDING = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "twin_breeding"));
-    public static final PowerType<Power> MORE_ANIMAL_LOOT = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "more_animal_loot"));
+    public static final PowerType<Power> TWIN_BREEDING = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"twin_breeding"));
+    public static final PowerType<Power> MORE_ANIMAL_LOOT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_animal_loot"));
 
     // Merchant
-    public static final PowerType<Power> TRADE_AVAILABILITY = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "trade_availability"));
-    public static final PowerType<Power> RARE_WANDERING_LOOT = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "rare_wandering_loot"));
+    public static final PowerType<Power> TRADE_AVAILABILITY = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"trade_availability"));
+    public static final PowerType<Power> RARE_WANDERING_LOOT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"rare_wandering_loot"));
 
     // Miner
     /*public static final PowerType<MultiMinePower> ORE_VEIN_MINING = new PowerType<>((type, player) -> new MultiMinePower(type, player, (pl, bs, bp) -> {
@@ -74,10 +74,10 @@ public class ClassPowerTypes {
         return affected;
     }, state -> state.getBlock() instanceof OreBlock));*/
     //public static final PowerType<Power> MORE_STONE_BREAK_SPEED = new PowerType<>(Power::new);
-    public static final PowerType<Power> NO_MINING_EXHAUSTION = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "no_mining_exhaustion"));
+    public static final PowerType<Power> NO_MINING_EXHAUSTION = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_mining_exhaustion"));
 
     //public static final PowerType<StartingEquipmentPower> EXPLORER_KIT = new PowerType<>((type, player) -> new StartingEquipmentPower(type, player).addStack(new ItemStack(Items.COMPASS)).addStack(new ItemStack(Items.CLOCK)).addStack(new ItemStack(Items.MAP, 9)));
-    public static final PowerType<Power> NO_SPRINT_EXHAUSTION = new PowerTypeReference<>(new Identifier(OriginsClasses.MODID, "no_sprint_exhaustion"));
+    public static final PowerType<Power> NO_SPRINT_EXHAUSTION = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_sprint_exhaustion"));
 
     // Lumberjack
     /*public static final PowerType<MultiMinePower> TREE_FELLING = new PowerType<>((type, player) -> (MultiMinePower)new MultiMinePower(type, player, (pl, bs, bp) -> {
@@ -166,7 +166,7 @@ public class ClassPowerTypes {
     }
 
     private static void register(String path, PowerType<?> powerType) {
-        Registry.register(ModRegistries.POWER_TYPE, new Identifier(OriginsClasses.MODID, path), powerType);
+        Registry.register(ModRegistries.POWER_TYPE, Identifier.of(OriginsClasses.MODID,path), powerType);
     }
 */
 }

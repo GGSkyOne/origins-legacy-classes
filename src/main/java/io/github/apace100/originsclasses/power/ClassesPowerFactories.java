@@ -23,7 +23,7 @@ public class ClassesPowerFactories {
 
     @SuppressWarnings("unchecked")
     public static void register() {
-        register(new PowerFactory<>(new Identifier(OriginsClasses.MODID, "craft_amount"),
+        register(new PowerFactory<>(Identifier.of(OriginsClasses.MODID, "craft_amount"),
             new SerializableData()
                 .add("item_condition", ApoliDataTypes.ITEM_CONDITION, null)
                 .add("modifier", Modifier.DATA_TYPE, null)
@@ -38,7 +38,7 @@ public class ClassesPowerFactories {
                     );
                     return power;
                 }));
-        register(new PowerFactory<>(new Identifier(OriginsClasses.MODID, "lumberjack"),
+        register(new PowerFactory<>(Identifier.of(OriginsClasses.MODID, "lumberjack"),
             new SerializableData(),
             data ->
                 (type, entity) -> new MultiMinePower(type, entity, (pl, bs, bp) -> {
@@ -82,7 +82,7 @@ public class ClassesPowerFactories {
                         return new ArrayList<>(affected);
                     }, state -> state.isIn(BlockTags.LOGS)).addCondition(e -> e instanceof LivingEntity l && l.getMainHandStack().getItem() instanceof AxeItem)
                 ));
-        register(new PowerFactory<>(new Identifier(OriginsClasses.MODID, "variable_int"),
+        register(new PowerFactory<>(Identifier.of(OriginsClasses.MODID, "variable_int"),
             new SerializableData()
                 .add("start_value", SerializableDataTypes.INT, null)
                 .add("min", SerializableDataTypes.INT, Integer.MIN_VALUE)

@@ -19,6 +19,6 @@ public class OriginsClasses implements ModInitializer {
 	public void onInitialize() {
 		NamespaceAlias.addAlias(MODID, "apoli");
 		ClassesPowerFactories.register();
-		Registry.register(Registries.STATUS_EFFECT, new Identifier(MODID, "stealth"), StealthEffect.INSTANCE);
+		Registry.register(Registries.STATUS_EFFECT, Identifier.of(MODID, "stealth"), StealthEffect.INSTANCE);
 	}
 }

@@ -5,7 +5,7 @@ import net.minecraft.util.Identifier;
 
 public class ModPackets {
 
-    public static final Identifier TRADER_TYPE = new Identifier(OriginsClasses.MODID, "trader_type");
-    public static final Identifier MULTI_MINING = new Identifier(OriginsClasses.MODID, "multi_mining");
+    public static final Identifier TRADER_TYPE = Identifier.of(OriginsClasses.MODID, "trader_type");
+    public static final Identifier MULTI_MINING = Identifier.of(OriginsClasses.MODID, "multi_mining");
 
 }
