@@ -1,15 +1,23 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
-import io.github.apace100.calio.Calio;
+import io.github.apace100.originsclasses.OriginsClasses;
 import io.github.apace100.originsclasses.power.ClassPowerTypes;
 import io.github.apace100.originsclasses.component.ClassesComponents;
 import io.github.apace100.originsclasses.power.CraftAmountPower;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.FoodComponent;
-import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.RecipeInputInventory;
@@ -28,8 +36,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.Optional;
 
 @Mixin(CraftingScreenHandler.class)
 public class CraftingScreenHandlerMixin {
@@ -81,24 +87,65 @@ public class CraftingScreenHandlerMixin {
         }
     }
 
+    @Unique
     private static void addQualityAttribute(ItemStack stack) {
         Item item = stack.getItem();
 
-        if (item instanceof ArmorItem) {
-            EquipmentSlot slot = ((ArmorItem)item).getSlotType();
-            stack.addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, new EntityAttributeModifier("Blacksmith quality", 0.25D, EntityAttributeModifier.Operation.ADDITION), slot);
-            Calio.setEntityAttributesAdditional(stack, true);
-        } else if(item instanceof SwordItem || item instanceof RangedWeaponItem) {
-            stack.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier("Blacksmith quality", 0.5D, EntityAttributeModifier.Operation.ADDITION), EquipmentSlot.MAINHAND);
-            Calio.setEntityAttributesAdditional(stack, true);
-        } else if(item instanceof MiningToolItem || item instanceof ShearsItem) {
+        if (item instanceof ArmorItem armor) {
+            addAttributeModifier(
+                stack,
+                EntityAttributes.GENERIC_ARMOR_TOUGHNESS,
+                new EntityAttributeModifier(
+                    Identifier.of(OriginsClasses.MODID, "blacksmith_armor_toughness"),
+                    0.25D,
+                    EntityAttributeModifier.Operation.ADD_VALUE
+                ),
+                AttributeModifierSlot.forEquipmentSlot(armor.getSlotType())
+            );
+        } else if (item instanceof SwordItem || item instanceof RangedWeaponItem) {
+            addAttributeModifier(
+                stack,
+                EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                new EntityAttributeModifier(
+                    Identifier.of(OriginsClasses.MODID, "blacksmith_attack_damage"),
+                    0.5D,
+                    EntityAttributeModifier.Operation.ADD_VALUE
+                ),
+                AttributeModifierSlot.MAINHAND
+            );
+        } else if (item instanceof MiningToolItem || item instanceof ShearsItem) {
             stack.set(ClassesComponents.MINING_SPEED_MULTIPLIER, 1.05F);
-        } else if(item instanceof ShieldItem) {
-            stack.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, new EntityAttributeModifier("Blacksmith quality", 0.1D, EntityAttributeModifier.Operation.ADDITION), EquipmentSlot.OFFHAND);
-            Calio.setEntityAttributesAdditional(stack, true);
+        } else if (item instanceof ShieldItem) {
+            addAttributeModifier(
+                stack,
+                EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
+                new EntityAttributeModifier(
+                    Identifier.of(OriginsClasses.MODID, "blacksmith_knockback_resistance"),
+                    0.1D,
+                    EntityAttributeModifier.Operation.ADD_VALUE
+                ),
+                AttributeModifierSlot.OFFHAND
+            );
         }
     }
 
+    @Unique
+    private static void addAttributeModifier(ItemStack stack, RegistryEntry<EntityAttribute> attribute, EntityAttributeModifier modifier, AttributeModifierSlot slot) {
+        AttributeModifiersComponent old = stack.getOrDefault(
+            DataComponentTypes.ATTRIBUTE_MODIFIERS,
+            AttributeModifiersComponent.DEFAULT
+        );
+
+        List<AttributeModifiersComponent.Entry> entries = new ArrayList<>(old.modifiers());
+        entries.add(new AttributeModifiersComponent.Entry(attribute, modifier, slot));
+
+        stack.set(
+            DataComponentTypes.ATTRIBUTE_MODIFIERS,
+            new AttributeModifiersComponent(entries, old.showInTooltip())
+        );
+    }
+
+    @Unique
     private static boolean isEquipment(ItemStack stack) {
         if (stack == null || stack.isEmpty()) {
             return false;
@@ -115,7 +162,7 @@ public class CraftingScreenHandlerMixin {
         if(item instanceof RangedWeaponItem)
             return true;
 
-        if(item instanceof ShieldItem)
+        if (item instanceof ShieldItem)
             return true;
 
         return false;
