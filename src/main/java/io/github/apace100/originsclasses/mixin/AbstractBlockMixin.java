@@ -19,29 +19,36 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractBlock.class)
 public class AbstractBlockMixin {
-
     @Inject(method = "calcBlockBreakingDelta", at = @At("RETURN"), cancellable = true)
     private void modifyMultiMinedBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos, CallbackInfoReturnable<Float> cir) {
         boolean processMultimine = false;
-        if(player instanceof ServerPlayerEntity) {
+
+        if (player instanceof ServerPlayerEntity) {
             SneakingStateSavingManager sneakingState = (SneakingStateSavingManager)(Object)((ServerPlayerEntity)player).interactionManager;
             processMultimine = !sneakingState.wasSneakingWhenBlockBreakingStarted();
         } else {
             processMultimine = ModPacketsS2C.isMultiMining;
         }
+
         if(processMultimine) {
             ItemStack tool = player.getEquippedStack(EquipmentSlot.MAINHAND);
+
             int toolDurability = 128;
-            if(!tool.isEmpty()) {
+
+            if (!tool.isEmpty()) {
                 toolDurability = tool.getMaxDamage() - tool.getDamage();
             }
+
             int finalToolDurability = toolDurability;
+
             PowerHolderComponent.KEY.get(player).getPowers(MultiMinePower.class).forEach(mmp -> {
-                if(mmp.isBlockStateAffected(state)) {
+                if (mmp.isBlockStateAffected(state)) {
                     int affectBlockCount = mmp.getAffectedBlocks(state, pos).size();
-                    if(affectBlockCount > 0) {
+
+                    if (affectBlockCount > 0) {
                         int multiplier = Math.min(affectBlockCount, finalToolDurability - 1);
                         multiplier = (int)Math.ceil((float)multiplier * 0.75F);
+
                         cir.setReturnValue(cir.getReturnValueF() / multiplier);
                     }
                 }

@@ -12,24 +12,25 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(AnvilScreenHandler.class)
 public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
-
     public AnvilScreenHandlerMixin(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(type, syncId, playerInventory, context);
     }
 
     @ModifyConstant(method = "updateResult", constant = @Constant(intValue = 4, ordinal = 0))
     private int halfRepairMaterialCost(int original) {
-        if(ClassPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
+        if (ClassPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
             return original / 2;
         }
+
         return original;
     }
 
     @ModifyConstant(method = "updateResult", constant = @Constant(intValue = 12, ordinal = 0))
     private int doubleCombineRepairDurabilityBonus(int original) {
-        if(ClassPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
+        if (ClassPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
             return original * 12;
         }
+
         return original;
     }
 }

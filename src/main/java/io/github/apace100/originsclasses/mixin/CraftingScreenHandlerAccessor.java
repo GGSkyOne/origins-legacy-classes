@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(CraftingScreenHandler.class)
 public interface CraftingScreenHandlerAccessor {
-
     @Accessor
     PlayerEntity getPlayer();
 }
