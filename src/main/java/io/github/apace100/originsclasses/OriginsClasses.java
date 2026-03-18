@@ -1,6 +1,7 @@
 package io.github.apace100.originsclasses;
 
 import io.github.apace100.apoli.util.NamespaceAlias;
+import io.github.apace100.originsclasses.component.ClassesComponents;
 import io.github.apace100.originsclasses.effect.StealthEffect;
 import io.github.apace100.originsclasses.power.ClassesPowerFactories;
 import net.fabricmc.api.ModInitializer;
@@ -9,7 +10,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class OriginsClasses implements ModInitializer {
-
 	public static final String MODID = "origins-classes";
 
 	// Mixin Save States :) Very useful, not hacky :)
@@ -18,6 +18,7 @@ public class OriginsClasses implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		NamespaceAlias.addAlias(MODID, "apoli");
+		ClassesComponents.register();
 		ClassesPowerFactories.register();
 		Registry.register(Registries.STATUS_EFFECT, Identifier.of(MODID, "stealth"), StealthEffect.INSTANCE);
 	}

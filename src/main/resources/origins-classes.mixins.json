@@ -24,7 +24,6 @@
     "HorseBaseEntityMixin",
     "HungerManagerMixin",
     "ItemEntryAccessor",
-    "ItemStackMixin",
     "LivingEntityMixin",
     "LootPoolAccessor",
     "LootTableAccessor",
