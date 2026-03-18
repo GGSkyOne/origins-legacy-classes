@@ -11,10 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientWorld.class)
 public class ClientWorldMixin {
-
     @Inject(method = "syncWorldEvent", at = @At("HEAD"), cancellable = true)
     private void cancelEffectsDuringStealth(PlayerEntity player, int eventId, BlockPos pos, int data, CallbackInfo ci) {
-        if(player != null && player.hasStatusEffect(StealthEffect.INSTANCE)) {
+        if (player != null && player.hasStatusEffect(StealthEffect.ENTRY)) {
             ci.cancel();
         }
     }

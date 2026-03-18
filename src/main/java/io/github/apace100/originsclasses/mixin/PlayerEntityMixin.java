@@ -23,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
-
     @Shadow @Final public PlayerScreenHandler playerScreenHandler;
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
@@ -40,7 +39,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F"), ordinal = 0)
     private float modifyBaseAttackDamageInStealth(float originalAttackDamage, Entity target) {
         float modifiedDamage = originalAttackDamage;
-        boolean isInStealth = this.hasStatusEffect(StealthEffect.INSTANCE);
+        boolean isInStealth = this.hasStatusEffect(StealthEffect.ENTRY);
+
         if(target != null && isInStealth) {
             float yawTarget = target.getYaw(1F);
             while(yawTarget < 0F) yawTarget += 360F;
@@ -49,34 +49,40 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             while(yawSelf < 0F) yawSelf += 360F;
             yawSelf %= 360F;
             float yawDiff = Math.abs(yawTarget - yawSelf);
+
             if(yawDiff < 80) {
                 modifiedDamage *= 2F;
             }
         }
-        if(ClassPowerTypes.STEALTH.isActive(this)) {
+
+        if (ClassPowerTypes.STEALTH.isActive(this)) {
             VariableIntPower stealthCounter = ClassPowerTypes.STEALTH.get(this);
             stealthCounter.setValue(stealthCounter.getMin());
         }
-        if(isInStealth) {
-            this.removeStatusEffect(StealthEffect.INSTANCE);
+
+        if (isInStealth) {
+            this.removeStatusEffect(StealthEffect.ENTRY);
         }
+
         return modifiedDamage;
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tickStealthCounter(CallbackInfo ci) {
-        if(ClassPowerTypes.STEALTH.isActive(this)) {
+        if (ClassPowerTypes.STEALTH.isActive(this)) {
             VariableIntPower stealthCounter = ClassPowerTypes.STEALTH.get(this);
-            if(this.isSneaking()) {
-                if(stealthCounter.increment() == stealthCounter.getMax()) {
-                    if(!this.hasStatusEffect(StealthEffect.INSTANCE)) {
-                        this.addStatusEffect(new StatusEffectInstance(StealthEffect.INSTANCE, 33000, 0, false, false, true));
+
+            if (this.isSneaking()) {
+                if (stealthCounter.increment() == stealthCounter.getMax()) {
+                    if (!this.hasStatusEffect(StealthEffect.ENTRY)) {
+                        this.addStatusEffect(new StatusEffectInstance(StealthEffect.ENTRY, 33000, 0, false, false, true));
                     }
                 }
             } else {
                 stealthCounter.setValue(stealthCounter.getMin());
-                if(this.hasStatusEffect(StealthEffect.INSTANCE)) {
-                    this.removeStatusEffect(StealthEffect.INSTANCE);
+
+                if (this.hasStatusEffect(StealthEffect.ENTRY)) {
+                    this.removeStatusEffect(StealthEffect.ENTRY);
                 }
             }
         }
@@ -84,14 +90,14 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "playSound(Lnet/minecraft/sound/SoundEvent;FF)V", at = @At("HEAD"), cancellable = true)
     private void muffleSoundsInStealth(SoundEvent sound, float volume, float pitch, CallbackInfo ci) {
-        if(this.hasStatusEffect(StealthEffect.INSTANCE)) {
+        if (this.hasStatusEffect(StealthEffect.ENTRY)) {
             ci.cancel();
         }
     }
 
     @Redirect(method = "eatFood", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;playSound(Lnet/minecraft/entity/player/PlayerEntity;DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FF)V"))
     private void muffleEatingFinishSound(World world, PlayerEntity player, double x, double y, double z, SoundEvent sound, SoundCategory category, float volume, float pitch) {
-        if(!this.hasStatusEffect(StealthEffect.INSTANCE)) {
+        if (!this.hasStatusEffect(StealthEffect.ENTRY)) {
             world.playSound(player, x, y, z, sound, category, volume, pitch);
         }
     }

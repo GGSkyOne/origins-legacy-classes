@@ -12,8 +12,7 @@ public final class EntityUtil {
             entity.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)
                 .addPersistentModifier(
                     new EntityAttributeModifier(
-                        Identifier.of(OriginsClasses.MODID,
-                        "beastmaster_health"),
+                        Identifier.of(OriginsClasses.MODID, "beastmaster_health"),
                         0.3,
                         EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
                     )
@@ -24,8 +23,7 @@ public final class EntityUtil {
             entity.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)
                 .addPersistentModifier(
                     new EntityAttributeModifier(
-                        Identifier.of(OriginsClasses.MODID,
-                        "beastmaster_attack"),
+                        Identifier.of(OriginsClasses.MODID, "beastmaster_attack"),
                         1.5,
                         EntityAttributeModifier.Operation.ADD_VALUE
                     )

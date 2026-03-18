@@ -22,6 +22,8 @@ public class OriginsClasses implements ModInitializer {
 		ClassesComponents.register();
 		ModPackets.registerPayloads();
 		ClassesPowerFactories.register();
+
 		Registry.register(Registries.STATUS_EFFECT, Identifier.of(MODID, "stealth"), StealthEffect.INSTANCE);
+		StealthEffect.ENTRY = Registries.STATUS_EFFECT.getEntry(StealthEffect.INSTANCE);
 	}
 }

@@ -43,7 +43,7 @@ public class CraftingScreenHandlerMixin {
     private static Optional<CraftingRecipe> classes$CachedRecipe;
 
     @Inject(method = "updateResult", at = @At(value = "INVOKE", target = "Ljava/util/Optional;isPresent()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void cacheRecipe(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, CraftingRecipeInput craftingRecipeInput, ServerPlayerEntity serverPlayerEntity, ItemStack itemStack, Optional optional, ServerPlayerEntity serverPlayerEntity, ItemStack itemStack, Optional optional) {
+    private static void cacheRecipe(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, CraftingRecipeInput craftingRecipeInput, ServerPlayerEntity serverPlayerEntity, ItemStack itemStack, Optional optional) {
         classes$CachedRecipe = optional;
     }
 

@@ -10,15 +10,17 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.WanderingTraderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.Registries;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
+import net.minecraft.village.TradedItem;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -28,13 +30,14 @@ import java.util.Set;
 
 @Mixin(MerchantEntity.class)
 public abstract class MerchantEntityMixin extends PassiveEntity {
-
     @Shadow
     protected TradeOfferList offers;
     @Shadow
     private PlayerEntity customer;
 
+    @Unique
     private int offerCountWithoutAdditional;
+    @Unique
     private TradeOfferList additionalOffers;
 
     protected MerchantEntityMixin(EntityType<? extends PassiveEntity> entityType, World world) {
@@ -43,23 +46,24 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
 
     @Redirect(method = "trade", at = @At(value = "INVOKE", target = "Lnet/minecraft/village/TradeOffer;use()V"))
     private void dontUseUpTrades(TradeOffer tradeOffer) {
-        if(((Object)this instanceof WanderingTraderEntity) || !ClassPowerTypes.TRADE_AVAILABILITY.isActive(this.customer)) {
+        if (((Object)this instanceof WanderingTraderEntity) || !ClassPowerTypes.TRADE_AVAILABILITY.isActive(this.customer)) {
             tradeOffer.use();
         }
     }
 
     @Inject(method = "setCustomer", at = @At("HEAD"))
     private void addAdditionalOffers(PlayerEntity customer, CallbackInfo ci) {
-        if((Object)this instanceof WanderingTraderEntity) {
+        if ((Object)this instanceof WanderingTraderEntity) {
             if (ClassPowerTypes.RARE_WANDERING_LOOT.isActive(customer)) {
-                if(additionalOffers == null) {
+                if (additionalOffers == null) {
                     offerCountWithoutAdditional = offers.size();
                     additionalOffers = buildAdditionalOffers();
                 }
+
                 this.offers.addAll(additionalOffers);
             } else if(additionalOffers != null) {
-                while(this.offers.size() > offerCountWithoutAdditional) {
-                    this.offers.remove(this.offers.size() - 1);
+                while (this.offers.size() > offerCountWithoutAdditional) {
+                    this.offers.removeLast();
                 }
             }
         }
@@ -67,48 +71,82 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     private void writeAdditionalOffersToTag(NbtCompound tag, CallbackInfo ci) {
-        if(additionalOffers != null) {
-            tag.put("AdditionalOffers", additionalOffers.toNbt());
-            tag.putInt("OfferCountNoAdditional", offerCountWithoutAdditional);
+        if (additionalOffers != null) {
+            TradeOfferList.CODEC
+                .encodeStart(NbtOps.INSTANCE, additionalOffers)
+                .result()
+                .ifPresent(nbt -> {
+                    tag.put("AdditionalOffers", nbt);
+                    tag.putInt("OfferCountNoAdditional", offerCountWithoutAdditional);
+                });
         }
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
     private void readAdditionalOffersFromTag(NbtCompound tag, CallbackInfo ci) {
-        if(tag.contains("AdditionalOffers")) {
-            additionalOffers = new TradeOfferList(tag.getCompound("AdditionalOffers"));
+        if (tag.contains("AdditionalOffers")) {
+            TradeOfferList.CODEC
+                .parse(NbtOps.INSTANCE, tag.get("AdditionalOffers"))
+                .result()
+                .ifPresent(list -> additionalOffers = list);
+
             offerCountWithoutAdditional = tag.getInt("OfferCountNoAdditional");
         }
     }
 
+    @Unique
     private TradeOfferList buildAdditionalOffers() {
         TradeOfferList list = new TradeOfferList();
         Random random = getRandom();
         Set<Item> excludedItems = TagUtil.getAllEntries(Registries.ITEM, ClassesTags.MERCHANT_BLACKLIST);
-        list.add(new TradeOffer(
-            new ItemStack(Items.EMERALD, random.nextInt(12) + 6),
-            ItemUtil.createMerchantItemStack(ItemUtil.getRandomObtainableItem(
-                this.getWorld().getServer(),
-                random,
-                excludedItems), random),
-            1,
-            5,
-            0.05F)
+
+        list.add(
+            new TradeOffer(
+                new TradedItem(
+                    Items.EMERALD,
+                    random.nextInt(12) + 6
+                ),
+                ItemUtil.createMerchantItemStack(
+                    ItemUtil.getRandomObtainableItem(
+                        this.getWorld().getServer(),
+                        random,
+                        excludedItems
+                    ),
+                    random,
+                    this.getWorld()
+                ),
+                1,
+                5,
+                0.05F)
         );
+
         Item desiredItem = ItemUtil.getRandomObtainableItem(
             this.getWorld().getServer(),
             random,
-            excludedItems);
-        list.add(new TradeOffer(
-            new ItemStack(desiredItem, 1 + random.nextInt(Math.min(16, desiredItem.getMaxCount()))),
-            ItemUtil.createMerchantItemStack(ItemUtil.getRandomObtainableItem(
-                this.getWorld().getServer(),
-                random,
-                excludedItems), random),
-            1,
-            5,
-            0.05F)
+            excludedItems
         );
+
+        list.add(
+            new TradeOffer(
+                new TradedItem(
+                    desiredItem,
+                    1 + random.nextInt(Math.min(16, desiredItem.getMaxCount()))
+                ),
+                ItemUtil.createMerchantItemStack(
+                    ItemUtil.getRandomObtainableItem(
+                        this.getWorld().getServer(),
+                        random,
+                        excludedItems
+                    ),
+                    random,
+                    this.getWorld()
+                ),
+                1,
+                5,
+                0.05F
+            )
+        );
+
         return list;
     }
 }

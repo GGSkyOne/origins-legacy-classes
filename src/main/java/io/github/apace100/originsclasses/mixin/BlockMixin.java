@@ -2,6 +2,7 @@ package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.originsclasses.power.ClassPowerTypes;
 import net.minecraft.block.*;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -17,11 +18,10 @@ import static net.minecraft.block.Block.dropStacks;
 
 @Mixin(Block.class)
 public class BlockMixin {
-
     @Inject(method = "afterBreak", at = @At("TAIL"))
     private void dropAdditionalCrops(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack, CallbackInfo ci) {
-        if(state.getBlock() instanceof CropBlock || state.getBlock() instanceof MelonBlock) {
-            if(player != null && ClassPowerTypes.MORE_CROP_DROPS.isActive(player) && new Random().nextInt(10) < 3) {
+        if (state.getBlock() instanceof CropBlock || state.isOf(Blocks.MELON)) {
+            if (player != null && ClassPowerTypes.MORE_CROP_DROPS.isActive(player) && new Random().nextInt(10) < 3) {
                 dropStacks(state, world, pos, blockEntity, player, stack);
             }
         }
@@ -29,9 +29,10 @@ public class BlockMixin {
 
     @ModifyConstant(method = "afterBreak", constant = @Constant(floatValue = 0.005F))
     private float preventBlockMiningExhaustion(float exhaustion, World world, PlayerEntity playerEntity) {
-        if(ClassPowerTypes.NO_MINING_EXHAUSTION.isActive(playerEntity)) {
+        if (ClassPowerTypes.NO_MINING_EXHAUSTION.isActive(playerEntity)) {
             return 0F;
         }
+
         return exhaustion;
     }
 }
