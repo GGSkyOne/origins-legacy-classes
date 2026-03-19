@@ -149,19 +149,24 @@ public class CraftingScreenHandlerMixin {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Unique
     private static void addAttributeModifier(ItemStack stack, RegistryEntry<EntityAttribute> attribute, EntityAttributeModifier modifier, AttributeModifierSlot slot) {
-        AttributeModifiersComponent old = stack.getOrDefault(
-            DataComponentTypes.ATTRIBUTE_MODIFIERS,
-            AttributeModifiersComponent.DEFAULT
-        );
+        AttributeModifiersComponent base = stack
+            .getItem()
+            .getComponents()
+            .get(DataComponentTypes.ATTRIBUTE_MODIFIERS);
 
-        List<AttributeModifiersComponent.Entry> entries = new ArrayList<>(old.modifiers());
+        if (base == null || base.modifiers().isEmpty()) {
+            base = stack.getItem().getAttributeModifiers();
+        }
+
+        List<AttributeModifiersComponent.Entry> entries = new ArrayList<>(base.modifiers());
         entries.add(new AttributeModifiersComponent.Entry(attribute, modifier, slot));
 
         stack.set(
             DataComponentTypes.ATTRIBUTE_MODIFIERS,
-            new AttributeModifiersComponent(entries, old.showInTooltip())
+            new AttributeModifiersComponent(entries, base.showInTooltip())
         );
     }
 
