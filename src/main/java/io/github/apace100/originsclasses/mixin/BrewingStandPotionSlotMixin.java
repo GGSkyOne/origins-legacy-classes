@@ -9,7 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(targets = "net/minecraft/screen/BrewingStandScreenHandler$PotionSlot")
 public class BrewingStandPotionSlotMixin {
-    @Inject(method = { "matches", "method_7631" }, at = @At("HEAD"), cancellable = true)
+    @Inject(
+        method = "canInsert",
+        at = @At("HEAD"),
+        cancellable = true
+    )
     private static void preventBrewingExtendedPotions(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if (Boolean.TRUE.equals(stack.get(ClassesComponents.EXTENDED_BY_CLERIC))) {
             cir.setReturnValue(false);

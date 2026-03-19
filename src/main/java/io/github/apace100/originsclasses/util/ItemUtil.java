@@ -71,12 +71,12 @@ public class ItemUtil {
             while (!entryQueue.isEmpty()) {
                 LootPoolEntry lootEntry = entryQueue.remove();
 
-                if(lootEntry instanceof ItemEntry) {
-                    OBTAINABLE.add(((ItemEntryAccessor)lootEntry).getItem());
+                if (lootEntry instanceof ItemEntry) {
+                    OBTAINABLE.add(((ItemEntryAccessor)lootEntry).getItem().value());
                 } else if(lootEntry instanceof TagEntry) {
                     OBTAINABLE.addAll(TagUtil.getAllEntries(Registries.ITEM, ((TagEntryAccessor)lootEntry).getName()));
                 } else if(lootEntry instanceof CombinedEntry) {
-                    entryQueue.addAll(Arrays.asList(((CombinedEntryAccessor)lootEntry).getChildren()));
+                    entryQueue.addAll(((CombinedEntryAccessor)lootEntry).getChildren());
                 }
             }
         });

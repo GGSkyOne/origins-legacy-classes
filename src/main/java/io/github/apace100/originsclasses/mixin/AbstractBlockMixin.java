@@ -19,7 +19,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractBlock.class)
 public class AbstractBlockMixin {
-    @Inject(method = "calcBlockBreakingDelta", at = @At("RETURN"), cancellable = true)
+    @Inject(
+        method = "calcBlockBreakingDelta",
+        at = @At("RETURN"),
+        cancellable = true
+    )
     private void modifyMultiMinedBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos, CallbackInfoReturnable<Float> cir) {
         boolean processMultimine = false;
 
@@ -30,7 +34,7 @@ public class AbstractBlockMixin {
             processMultimine = ModPacketsS2C.isMultiMining;
         }
 
-        if(processMultimine) {
+        if (processMultimine) {
             ItemStack tool = player.getEquippedStack(EquipmentSlot.MAINHAND);
 
             int toolDurability = 128;

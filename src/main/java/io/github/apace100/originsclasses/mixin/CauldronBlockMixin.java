@@ -11,8 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -28,10 +28,13 @@ import java.util.Optional;
 
 @Mixin(AbstractCauldronBlock.class)
 public abstract class CauldronBlockMixin {
-    @Inject(method = "onUse", at = @At(value = "RETURN", ordinal = 0), cancellable = true)
-    private void extendPotionDuration(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
+    @Inject(
+        method = "onUseWithItem",
+        at = @At(value = "RETURN", ordinal = 0),
+        cancellable = true
+    )
+    private void extendPotionDuration(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ItemActionResult> cir) {
         if (state.isOf(Blocks.WATER_CAULDRON) && ClassPowerTypes.LONGER_POTIONS.isActive(player)) {
-            ItemStack stack = player.getStackInHand(hand);
             int level = state.get(LeveledCauldronBlock.LEVEL);
 
             if (stack.getItem() instanceof PotionItem && level > 0 && !Boolean.TRUE.equals(stack.get(ClassesComponents.EXTENDED_BY_CLERIC))) {
@@ -63,7 +66,7 @@ public abstract class CauldronBlockMixin {
                     world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     world.emitGameEvent(null, GameEvent.FLUID_PICKUP, pos);
 
-                    cir.setReturnValue(ActionResult.SUCCESS);
+                    cir.setReturnValue(ItemActionResult.SUCCESS);
                 }
             }
         }
