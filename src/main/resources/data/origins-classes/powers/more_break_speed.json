@@ -1,7 +1,7 @@
 {
   "type": "origins:modify_break_speed",
   "modifier": {
-    "name": "More stone break speed",
+    "name": "More break speed",
     "value": 0.45,
     "operation": "multiply_base"
   },

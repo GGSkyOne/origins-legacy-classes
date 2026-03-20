@@ -23,9 +23,18 @@ public class ClassesPowerTypes {
     public static final PowerType<Power> MORE_ANIMAL_LOOT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_animal_loot"));
 
     /* Miner
+    * MORE_BREAK_SPEED - You mine material quicker than others with your pickaxe.
     * NO_MINING_EXHAUSTION - Breaking blocks doesn't cause you to exhaust.
     */
+    public static final PowerType<Power> MORE_BREAK_SPEED = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_break_speed"));
     public static final PowerType<Power> NO_MINING_EXHAUSTION = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_mining_exhaustion"));
+
+    /* Lumberjack
+    * TREE_FELLING - You cut down whole trees at once, unless you sneak.
+    * MORE_PLANKS_FROM_LOGS - You gain two more wooden planks from a single log when crafting.
+    */
+    public static final PowerType<TreeFellingPower> TREE_FELLING = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"tree_felling"));
+    public static final PowerType<CraftAmountPower> MORE_PLANKS_FROM_LOGS = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_planks_from_logs"));
 
     /* Cook
     * MORE_SMOKER_XP - You receive more experience from cooking food in a smoker.
@@ -56,13 +65,17 @@ public class ClassesPowerTypes {
     public static final PowerType<Power> RARE_WANDERING_LOOT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"rare_wandering_loot"));
 
     /* Explorer
+    * EXPLORER_KIT - You start the game with a compass, a clock and nine empty maps.
     * NO_SPRINT_EXHAUSTION - Sprinting doesn't cause you to exhaust.
     */
+    public static final PowerType<ExplorerKitPower> EXPLORER_KIT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID, "explorer_kit"));
     public static final PowerType<Power> NO_SPRINT_EXHAUSTION = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_sprint_exhaustion"));
 
     /* Warrior
+    * MORE_ATTACK_DAMAGE - Able to use each weapon to its fullest potential, you deal a bit more damage.
     * LESS_SHIELD_SLOWDOWN - You are slowed down less when protecting yourself with a shield.
     */
+    public static final PowerType<Power> MORE_ATTACK_DAMAGE = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_attack_damage"));
     public static final PowerType<Power> LESS_SHIELD_SLOWDOWN = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"less_shield_slowdown"));
 
     /* Archer

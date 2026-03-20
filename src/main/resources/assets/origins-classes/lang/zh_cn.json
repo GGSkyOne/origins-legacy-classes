@@ -121,8 +121,8 @@
   "power.origins-classes.no_mining_exhaustion.name": "采石有技巧",
   "power.origins-classes.no_mining_exhaustion.description": "采掘方块不会让你感到疲惫。",
 
-  "power.origins-classes.more_stone_break_speed.name": "挖矿有秘方",
-  "power.origins-classes.more_stone_break_speed.description": "你开采矿石的速度相比他人更快。",
+  "power.origins-classes.more_break_speed.name": "挖矿有秘方",
+  "power.origins-classes.more_break_speed.description": "你开采矿石的速度相比他人更快。",
 
   "power.origins-classes.tree_felling.name": "你给我倒下来——！",
   "power.origins-classes.tree_felling.description": "你可以立刻砍下整棵树木，除非你潜行。",

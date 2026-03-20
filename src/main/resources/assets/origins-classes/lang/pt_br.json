@@ -121,8 +121,8 @@
   "power.origins-classes.no_mining_exhaustion.name": "Excavdor Experiente",
   "power.origins-classes.no_mining_exhaustion.description": "Quebrar blocos não te deixa exusto.",
 
-  "power.origins-classes.more_stone_break_speed.name": "Minerador Expert",
-  "power.origins-classes.more_stone_break_speed.description": "Você cava materiais de pedra mais rápido que outros.",
+  "power.origins-classes.more_break_speed.name": "Minerador Expert",
+  "power.origins-classes.more_break_speed.description": "Você cava materiais de pedra mais rápido que outros.",
 
   "power.origins-classes.tree_felling.name": "Madeira!",
   "power.origins-classes.tree_felling.description": "Você corta arvores inteiras de uma vez, a menos que esgueire.",

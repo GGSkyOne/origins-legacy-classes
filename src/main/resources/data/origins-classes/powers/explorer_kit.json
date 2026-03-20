@@ -1,15 +1,3 @@
 {
-  "type": "origins:starting_equipment",
-  "stacks": [
-    {
-      "item": "minecraft:compass"
-    },
-    {
-      "item": "minecraft:clock"
-    },
-    {
-      "item": "minecraft:map",
-      "amount": 9
-    }
-  ]
+  "type": "origins-classes:explorer_kit"
 }

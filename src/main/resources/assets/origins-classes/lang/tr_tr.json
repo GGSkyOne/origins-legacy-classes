@@ -121,8 +121,8 @@
   "power.origins-classes.no_mining_exhaustion.name": "Tecrübeli Madenci",
   "power.origins-classes.no_mining_exhaustion.description": "Blok kırmak Seni Yormaz.",
 
-  "power.origins-classes.more_stone_break_speed.name": "Maden Ustası",
-  "power.origins-classes.more_stone_break_speed.description": "Taşları diğerlerine göre daha hızlı kırarsın.",
+  "power.origins-classes.more_break_speed.name": "Maden Ustası",
+  "power.origins-classes.more_break_speed.description": "Taşları diğerlerine göre daha hızlı kırarsın.",
 
   "power.origins-classes.tree_felling.name": "Timber!",
   "power.origins-classes.tree_felling.description": "Eğilmediğin sürece ağaçları tekte kesebilirsin.",

@@ -121,8 +121,8 @@
   "power.origins-classes.no_mining_exhaustion.name": "Experienced Excavator",
   "power.origins-classes.no_mining_exhaustion.description": "Breaking blocks doesn't cause you to exhaust.",
 
-  "power.origins-classes.more_stone_break_speed.name": "Mining Expert",
-  "power.origins-classes.more_stone_break_speed.description": "You mine material quicker than others with your pickaxe.",
+  "power.origins-classes.more_break_speed.name": "Mining Expert",
+  "power.origins-classes.more_break_speed.description": "You mine material quicker than others with your pickaxe.",
 
   "power.origins-classes.tree_felling.name": "Timber!",
   "power.origins-classes.tree_felling.description": "You cut down whole trees at once, unless you sneak.",

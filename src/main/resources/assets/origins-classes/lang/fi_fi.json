@@ -121,8 +121,8 @@
   "power.origins-classes.no_mining_exhaustion.name": "Kokenut kaivaja",
   "power.origins-classes.no_mining_exhaustion.description": "Kuutioiden rikkominen ei uuvuta sinua.",
 
-  "power.origins-classes.more_stone_break_speed.name": "Louhinnan asiantuntija",
-  "power.origins-classes.more_stone_break_speed.description": "Louhit kiviainesta nopeammin kuin muut.",
+  "power.origins-classes.more_break_speed.name": "Louhinnan asiantuntija",
+  "power.origins-classes.more_break_speed.description": "Louhit kiviainesta nopeammin kuin muut.",
 
   "power.origins-classes.tree_felling.name": "Puu kaatuu!",
   "power.origins-classes.tree_felling.description": "Kaadat kokonaisia puita kerralla, ellet hiivi.",

@@ -14,21 +14,21 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.*;
 
-public class LumberjackPower extends MultiMinePower {
+public class TreeFellingPower extends MultiMinePower {
     private static final int BLOCK_LIMIT = 255;
 
-    public static final PowerFactory<LumberjackPower> FACTORY = new PowerFactory<>(
-        Identifier.of(OriginsClasses.MODID, "lumberjack"),
+    public static final PowerFactory<TreeFellingPower> FACTORY = new PowerFactory<>(
+        Identifier.of(OriginsClasses.MODID, "tree_felling"),
         new SerializableData(),
         data -> (type, entity) -> {
-            LumberjackPower power = new LumberjackPower(type, entity);
+            TreeFellingPower power = new TreeFellingPower(type, entity);
             power.addCondition(e -> e instanceof LivingEntity l && l.getMainHandStack().getItem() instanceof AxeItem);
 
             return power;
         }
     );
 
-    public LumberjackPower(PowerType<?> type, LivingEntity entity) {
+    public TreeFellingPower(PowerType<?> type, LivingEntity entity) {
         super(type, entity, (pl, bs, bp) -> {
             Set<BlockPos> affected = new HashSet<>();
             Deque<BlockPos> queue = new ArrayDeque<>();

@@ -7,7 +7,8 @@ import net.minecraft.registry.Registry;
 public class ClassesPowerFactories {
     public static void register() {
         register(CraftAmountPower.FACTORY);
-        register(LumberjackPower.FACTORY);
+        register(ExplorerKitPower.FACTORY);
+        register(TreeFellingPower.FACTORY);
         register(ClassesVariableIntPower.FACTORY);
     }
 
