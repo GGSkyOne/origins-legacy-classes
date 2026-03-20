@@ -16,8 +16,12 @@ public class ClassesVariableIntPower extends VariableIntPower {
             .add("start_value", SerializableDataTypes.INT, null)
             .add("min", SerializableDataTypes.INT, Integer.MIN_VALUE)
             .add("max", SerializableDataTypes.INT, Integer.MAX_VALUE),
-        data -> (type, entity) -> new ClassesVariableIntPower(type, entity,
-            data.getInt("start_value"), data.getInt("min"), data.getInt("max")));
+        data -> (type, entity) -> new ClassesVariableIntPower(
+            type,
+            entity,
+            data.getInt("start_value"), data.getInt("min"), data.getInt("max")
+        )
+    );
 
     public ClassesVariableIntPower(PowerType<?> type, LivingEntity entity, int startValue, int min, int max) {
         super(type, entity, startValue, min, max);

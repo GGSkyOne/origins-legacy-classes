@@ -54,7 +54,7 @@ public class CraftingScreenHandlerMixin {
             target = "Ljava/util/Optional;isPresent()Z"
         )
     )
-    private static void cacheRecipe(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, @Local Optional optional) {
+    private static void cacheRecipe(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, @Local Optional<CraftingRecipe> optional) {
         classes$CachedRecipe = optional;
     }
 
