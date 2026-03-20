@@ -8,8 +8,16 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 public class ModPacketsS2C {
-    public static boolean isWanderingTrader;
-    public static boolean isMultiMining;
+    private static boolean isWanderingTrader;
+    private static boolean isMultiMining;
+
+    public static boolean isWanderingTrader() {
+        return isWanderingTrader;
+    }
+
+    public static boolean isMultiMining() {
+        return isMultiMining;
+    }
 
     @Environment(EnvType.CLIENT)
     public static void register() {

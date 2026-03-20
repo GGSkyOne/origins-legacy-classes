@@ -44,7 +44,7 @@ public class CraftingScreenHandlerMixin {
 
     @Inject(method = "updateResult", at = @At("HEAD"))
     private static void saveCraftingPlayer(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci) {
-        CraftingContext.craftingPlayer = player;
+        CraftingContext.set(player);
     }
 
     @Inject(

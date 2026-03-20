@@ -23,7 +23,7 @@ public class SimpleMerchantMixin {
         )
     )
     private void preventUseClientSide(TradeOffer tradeOffer) {
-        if (ModPacketsS2C.isWanderingTrader || !ClassPowerTypes.TRADE_AVAILABILITY.isActive(player)) {
+        if (ModPacketsS2C.isWanderingTrader() || !ClassPowerTypes.TRADE_AVAILABILITY.isActive(player)) {
             tradeOffer.use();
         }
     }

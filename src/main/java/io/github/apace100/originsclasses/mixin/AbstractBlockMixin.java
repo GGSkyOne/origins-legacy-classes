@@ -31,7 +31,7 @@ public class AbstractBlockMixin {
             SneakingStateSavingManager sneakingState = (SneakingStateSavingManager)(Object)((ServerPlayerEntity)player).interactionManager;
             processMultimine = !sneakingState.wasSneakingWhenBlockBreakingStarted();
         } else {
-            processMultimine = ModPacketsS2C.isMultiMining;
+            processMultimine = ModPacketsS2C.isMultiMining();
         }
 
         if (processMultimine) {
