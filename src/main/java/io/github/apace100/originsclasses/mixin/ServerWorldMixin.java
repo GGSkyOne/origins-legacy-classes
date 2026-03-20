@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.effect.StealthEffect;
+import io.github.apace100.originsclasses.effect.ModEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +17,7 @@ public class ServerWorldMixin {
         cancellable = true
     )
     private void cancelSyncingStealthEvents(PlayerEntity player, int eventId, BlockPos pos, int data, CallbackInfo ci) {
-        if (player != null && player.hasStatusEffect(StealthEffect.ENTRY)) {
+        if (player != null && player.hasStatusEffect(ModEffects.STEALTH)) {
             ci.cancel();
         }
     }
