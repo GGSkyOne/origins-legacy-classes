@@ -12,7 +12,7 @@ import java.util.function.UnaryOperator;
 
 public final class ClassesComponents {
     public static final ComponentType<Boolean> EXTENDED_BY_CLERIC = register(
-        "extended_by_cleric", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL)
+        "extended_by_cleric", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOLEAN)
     );
 
     public static final ComponentType<Integer> FOOD_BONUS = register(

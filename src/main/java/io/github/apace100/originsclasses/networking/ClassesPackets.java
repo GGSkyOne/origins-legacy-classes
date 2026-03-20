@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 public class ClassesPackets {
     public record TraderTypePayload(boolean isWanderingTrader) implements CustomPayload {
         public static final Id<TraderTypePayload> ID = new Id<>(Identifier.of(OriginsClasses.MODID, "trader_type"));
-        public static final PacketCodec<PacketByteBuf, TraderTypePayload> CODEC = PacketCodecs.BOOL.xmap(TraderTypePayload::new, TraderTypePayload::isWanderingTrader).cast();
+        public static final PacketCodec<PacketByteBuf, TraderTypePayload> CODEC = PacketCodecs.BOOLEAN.xmap(TraderTypePayload::new, TraderTypePayload::isWanderingTrader).cast();
 
         @Override
         public Id<? extends CustomPayload> getId() {
@@ -21,7 +21,7 @@ public class ClassesPackets {
 
     public record MultiMiningPayload(boolean isMultiMining) implements CustomPayload {
         public static final Id<MultiMiningPayload> ID = new Id<>(Identifier.of(OriginsClasses.MODID, "multi_mining"));
-        public static final PacketCodec<PacketByteBuf, MultiMiningPayload> CODEC = PacketCodecs.BOOL.xmap(MultiMiningPayload::new, MultiMiningPayload::isMultiMining).cast();
+        public static final PacketCodec<PacketByteBuf, MultiMiningPayload> CODEC = PacketCodecs.BOOLEAN.xmap(MultiMiningPayload::new, MultiMiningPayload::isMultiMining).cast();
 
         @Override
         public Id<? extends CustomPayload> getId() {
