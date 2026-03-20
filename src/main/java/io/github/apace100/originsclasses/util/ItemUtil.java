@@ -2,6 +2,7 @@ package io.github.apace100.originsclasses.util;
 
 import com.google.common.collect.Sets;
 import io.github.apace100.originsclasses.mixin.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,7 +29,7 @@ public class ItemUtil {
     public static ItemStack createMerchantItemStack(Item item, Random random, World world) {
         ItemStack stack = new ItemStack(item);
 
-        if (item.isEnchantable(stack) && random.nextFloat() < 0.5) {
+        if (stack.contains(DataComponentTypes.ENCHANTABLE) && random.nextFloat() < 0.5) {
             EnchantmentHelper.enchant(random, stack, 1 + random.nextInt(30), world.getRegistryManager(), Optional.empty());
         }
 

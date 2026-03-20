@@ -10,7 +10,9 @@ import io.github.apace100.originsclasses.util.CraftingContext;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.EquippableComponent;
 import net.minecraft.component.type.FoodComponent;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -24,9 +26,8 @@ import net.minecraft.recipe.RepairItemRecipe;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,7 +44,7 @@ public class CraftingScreenHandlerMixin {
     private static Optional<CraftingRecipe> cachedRecipe;
 
     @Inject(method = "updateResult", at = @At("HEAD"))
-    private static void saveCraftingPlayer(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci) {
+    private static void saveCraftingPlayer(ScreenHandler handler, ServerWorld world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @org.jspecify.annotations.Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci) {
         CraftingContext.set(player);
     }
 
@@ -54,7 +55,7 @@ public class CraftingScreenHandlerMixin {
             target = "Ljava/util/Optional;isPresent()Z"
         )
     )
-    private static void cacheRecipe(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, @Local Optional<CraftingRecipe> optional) {
+    private static void cacheRecipe(ScreenHandler handler, ServerWorld world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @org.jspecify.annotations.Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, @Local Optional<CraftingRecipe> optional) {
         cachedRecipe = optional;
     }
 
@@ -65,7 +66,7 @@ public class CraftingScreenHandlerMixin {
             target = "Lnet/minecraft/inventory/CraftingResultInventory;setStack(ILnet/minecraft/item/ItemStack;)V"
         )
     )
-    private static void modifyCraftingResult(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, @Local ItemStack itemStack) {
+    private static void modifyCraftingResult(ScreenHandler handler, ServerWorld world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @org.jspecify.annotations.Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, @Local ItemStack itemStack) {
         if (itemStack.contains(DataComponentTypes.FOOD) && ClassesPowerTypes.BETTER_CRAFTED_FOOD.isActive(player)) {
             FoodComponent food = itemStack.get(DataComponentTypes.FOOD);
 
@@ -108,21 +109,22 @@ public class CraftingScreenHandlerMixin {
     private static void addQualityAttribute(ItemStack stack) {
         Item item = stack.getItem();
 
-        if (item instanceof ArmorItem armor) {
+        EquippableComponent equippable = item.getComponents().get(DataComponentTypes.EQUIPPABLE);
+        if (equippable != null && isArmorSlot(equippable.slot())) {
             addAttributeModifier(
                 stack,
-                EntityAttributes.GENERIC_ARMOR_TOUGHNESS,
+                EntityAttributes.ARMOR_TOUGHNESS,
                 new EntityAttributeModifier(
                     Identifier.of(OriginsClasses.MODID, "blacksmith_armor_toughness"),
                     0.25D,
                     EntityAttributeModifier.Operation.ADD_VALUE
                 ),
-                AttributeModifierSlot.forEquipmentSlot(armor.getSlotType())
+                AttributeModifierSlot.forEquipmentSlot(equippable.slot())
             );
-        } else if (item instanceof SwordItem || item instanceof RangedWeaponItem) {
+        } else if (item.getComponents().contains(DataComponentTypes.WEAPON) || item instanceof RangedWeaponItem) {
             addAttributeModifier(
                 stack,
-                EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                EntityAttributes.ATTACK_DAMAGE,
                 new EntityAttributeModifier(
                     Identifier.of(OriginsClasses.MODID, "blacksmith_attack_damage"),
                     0.5D,
@@ -130,12 +132,12 @@ public class CraftingScreenHandlerMixin {
                 ),
                 AttributeModifierSlot.MAINHAND
             );
-        } else if (item instanceof MiningToolItem || item instanceof ShearsItem) {
+        } else if (item.getComponents().contains(DataComponentTypes.TOOL) || item instanceof ShearsItem) {
             stack.set(ClassesComponents.MINING_SPEED_MULTIPLIER, 1.05F);
         } else if (item instanceof ShieldItem) {
             addAttributeModifier(
                 stack,
-                EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
+                EntityAttributes.KNOCKBACK_RESISTANCE,
                 new EntityAttributeModifier(
                     Identifier.of(OriginsClasses.MODID, "blacksmith_knockback_resistance"),
                     0.1D,
@@ -146,7 +148,11 @@ public class CraftingScreenHandlerMixin {
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @Unique
+    private static boolean isArmorSlot(EquipmentSlot slot) {
+        return slot == EquipmentSlot.HEAD || slot == EquipmentSlot.CHEST || slot == EquipmentSlot.LEGS || slot == EquipmentSlot.FEET;
+    }
+
     @Unique
     private static void addAttributeModifier(ItemStack stack, RegistryEntry<EntityAttribute> attribute, EntityAttributeModifier modifier, AttributeModifierSlot slot) {
         AttributeModifiersComponent base = stack
@@ -155,7 +161,7 @@ public class CraftingScreenHandlerMixin {
             .get(DataComponentTypes.ATTRIBUTE_MODIFIERS);
 
         if (base == null || base.modifiers().isEmpty()) {
-            base = stack.getItem().getAttributeModifiers();
+            base = AttributeModifiersComponent.DEFAULT;
         }
 
         List<AttributeModifiersComponent.Entry> entries = new ArrayList<>(base.modifiers());
@@ -163,7 +169,7 @@ public class CraftingScreenHandlerMixin {
 
         stack.set(
             DataComponentTypes.ATTRIBUTE_MODIFIERS,
-            new AttributeModifiersComponent(entries, base.showInTooltip())
+            new AttributeModifiersComponent(entries)
         );
     }
 
@@ -175,10 +181,12 @@ public class CraftingScreenHandlerMixin {
 
         Item item = stack.getItem();
 
-        if (item instanceof ArmorItem)
+        EquippableComponent equippable = item.getComponents().get(DataComponentTypes.EQUIPPABLE);
+
+        if (equippable != null && isArmorSlot(equippable.slot()))
             return true;
 
-        if (item instanceof ToolItem)
+        if (item.getComponents().contains(DataComponentTypes.TOOL))
             return true;
 
         if (item instanceof RangedWeaponItem)

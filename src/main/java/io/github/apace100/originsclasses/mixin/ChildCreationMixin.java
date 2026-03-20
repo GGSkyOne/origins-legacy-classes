@@ -48,7 +48,7 @@ public class ChildCreationMixin {
 
         @Inject(method = "createChild", at = @At("RETURN"))
         private void applyBeastmasterBoost(ServerWorld serverWorld, PassiveEntity passiveEntity, CallbackInfoReturnable<HorseEntity> cir) {
-            if (ClassesPowerTypes.TAMED_ANIMAL_BOOST.isActive(serverWorld.getPlayerByUuid(this.getOwnerUuid()))) {
+            if (ClassesPowerTypes.TAMED_ANIMAL_BOOST.isActive(this.getOwner())) {
                 EntityUtil.addBeastmasterAttributes(cir.getReturnValue());
             }
         }

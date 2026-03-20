@@ -16,14 +16,14 @@ public final class EntityUtil {
     public static void addBeastmasterAttributes(LivingEntity entity) {
         applyModifier(
             entity,
-            EntityAttributes.GENERIC_MAX_HEALTH,
+            EntityAttributes.MAX_HEALTH,
             Identifier.of(OriginsClasses.MODID, "beastmaster_health"),
             BEASTMASTER_HEALTH_BONUS, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
         );
 
         applyModifier(
             entity,
-            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+            EntityAttributes.ATTACK_DAMAGE,
             Identifier.of(OriginsClasses.MODID, "beastmaster_attack"),
             BEASTMASTER_ATTACK_BONUS, EntityAttributeModifier.Operation.ADD_VALUE
         );

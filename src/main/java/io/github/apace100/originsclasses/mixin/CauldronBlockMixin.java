@@ -12,7 +12,7 @@ import net.minecraft.item.PotionItem;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,7 +33,7 @@ public abstract class CauldronBlockMixin {
         at = @At(value = "RETURN", ordinal = 0),
         cancellable = true
     )
-    private void extendPotionDuration(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ItemActionResult> cir) {
+    private void extendPotionDuration(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (state.isOf(Blocks.WATER_CAULDRON) && ClassesPowerTypes.LONGER_POTIONS.isActive(player)) {
             int level = state.get(LeveledCauldronBlock.LEVEL);
 
@@ -59,14 +59,14 @@ public abstract class CauldronBlockMixin {
                             effect.shouldShowIcon()))
                         .toList();
 
-                    int color = new PotionContentsComponent(Optional.empty(), Optional.empty(), customPotion).getColor();
-                    stack.set(DataComponentTypes.POTION_CONTENTS, new PotionContentsComponent(Optional.empty(), Optional.of(color), customPotion));
+                    int color = new PotionContentsComponent(Optional.empty(), Optional.empty(), customPotion, Optional.empty()).getColor();
+                    stack.set(DataComponentTypes.POTION_CONTENTS, new PotionContentsComponent(Optional.empty(), Optional.of(color), customPotion, Optional.empty()));
 
                     LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
                     world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     world.emitGameEvent(null, GameEvent.FLUID_PICKUP, pos);
 
-                    cir.setReturnValue(ItemActionResult.SUCCESS);
+                    cir.setReturnValue(ActionResult.SUCCESS);
                 }
             }
         }
