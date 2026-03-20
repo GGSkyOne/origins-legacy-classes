@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.networking.ModPackets;
+import io.github.apace100.originsclasses.networking.ClassesPackets;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,6 +25,6 @@ public class VillagerEntityMixin {
             return;
         }
 
-        ServerPlayNetworking.send((ServerPlayerEntity) customer, new ModPackets.TraderTypePayload(false));
+        ServerPlayNetworking.send((ServerPlayerEntity) customer, new ClassesPackets.TraderTypePayload(false));
     }
 }

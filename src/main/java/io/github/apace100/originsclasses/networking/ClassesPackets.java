@@ -8,7 +8,7 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 
-public class ModPackets {
+public class ClassesPackets {
     public record TraderTypePayload(boolean isWanderingTrader) implements CustomPayload {
         public static final Id<TraderTypePayload> ID = new Id<>(Identifier.of(OriginsClasses.MODID, "trader_type"));
         public static final PacketCodec<PacketByteBuf, TraderTypePayload> CODEC = PacketCodecs.BOOL.xmap(TraderTypePayload::new, TraderTypePayload::isWanderingTrader).cast();

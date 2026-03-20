@@ -2,7 +2,7 @@ package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.originsclasses.ducks.SneakingStateSavingManager;
-import io.github.apace100.originsclasses.networking.ModPackets;
+import io.github.apace100.originsclasses.networking.ClassesPackets;
 import io.github.apace100.originsclasses.power.MultiMinePower;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
@@ -45,7 +45,7 @@ public abstract class ServerPlayerInteractionManagerMixin implements SneakingSta
     )
     private void saveSneakingState(BlockPos pos, PlayerActionC2SPacket.Action action, Direction direction, int worldHeight, int sequence, CallbackInfo ci) {
         wasSneakingWhenStarted = player.isSneaking();
-        ServerPlayNetworking.send(player, new ModPackets.MultiMiningPayload(!wasSneakingWhenStarted));
+        ServerPlayNetworking.send(player, new ClassesPackets.MultiMiningPayload(!wasSneakingWhenStarted));
     }
 
     @Inject(method = "finishMining", at = @At("HEAD"))

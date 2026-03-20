@@ -1,7 +1,7 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.apoli.power.VariableIntPower;
-import io.github.apace100.originsclasses.effect.ModEffects;
+import io.github.apace100.originsclasses.effect.ClassesEffects;
 import io.github.apace100.originsclasses.power.ClassPowerTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -34,7 +34,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     )
     private float modifyBaseAttackDamageInStealth(float originalAttackDamage, Entity target) {
         float modifiedDamage = originalAttackDamage;
-        boolean isInStealth = this.hasStatusEffect(ModEffects.STEALTH);
+        boolean isInStealth = this.hasStatusEffect(ClassesEffects.STEALTH);
 
         if (target != null && isInStealth) {
             float yawTarget = target.getYaw(1F);
@@ -62,7 +62,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         }
 
         if (isInStealth) {
-            this.removeStatusEffect(ModEffects.STEALTH);
+            this.removeStatusEffect(ClassesEffects.STEALTH);
         }
 
         return modifiedDamage;
@@ -75,15 +75,15 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
             if (this.isSneaking()) {
                 if (stealthCounter.increment() == stealthCounter.getMax()) {
-                    if (!this.hasStatusEffect(ModEffects.STEALTH)) {
-                        this.addStatusEffect(new StatusEffectInstance(ModEffects.STEALTH, 33000, 0, false, false, true));
+                    if (!this.hasStatusEffect(ClassesEffects.STEALTH)) {
+                        this.addStatusEffect(new StatusEffectInstance(ClassesEffects.STEALTH, 33000, 0, false, false, true));
                     }
                 }
             } else {
                 stealthCounter.setValue(stealthCounter.getMin());
 
-                if (this.hasStatusEffect(ModEffects.STEALTH)) {
-                    this.removeStatusEffect(ModEffects.STEALTH);
+                if (this.hasStatusEffect(ClassesEffects.STEALTH)) {
+                    this.removeStatusEffect(ClassesEffects.STEALTH);
                 }
             }
         }
@@ -95,7 +95,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         cancellable = true
     )
     private void muffleSoundsInStealth(SoundEvent sound, float volume, float pitch, CallbackInfo ci) {
-        if (this.hasStatusEffect(ModEffects.STEALTH)) {
+        if (this.hasStatusEffect(ClassesEffects.STEALTH)) {
             ci.cancel();
         }
     }
@@ -108,7 +108,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         )
     )
     private void muffleEatingFinishSound(World world, PlayerEntity player, double x, double y, double z, SoundEvent sound, SoundCategory category, float volume, float pitch) {
-        if (!this.hasStatusEffect(ModEffects.STEALTH)) {
+        if (!this.hasStatusEffect(ClassesEffects.STEALTH)) {
             world.playSound(player, x, y, z, sound, category, volume, pitch);
         }
     }

@@ -2,7 +2,7 @@ package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.originsclasses.ducks.SneakingStateSavingManager;
-import io.github.apace100.originsclasses.networking.ModPacketsS2C;
+import io.github.apace100.originsclasses.networking.ClassesPacketsS2C;
 import io.github.apace100.originsclasses.power.MultiMinePower;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
@@ -31,7 +31,7 @@ public class AbstractBlockMixin {
             SneakingStateSavingManager sneakingState = (SneakingStateSavingManager)(Object)((ServerPlayerEntity)player).interactionManager;
             processMultimine = !sneakingState.wasSneakingWhenBlockBreakingStarted();
         } else {
-            processMultimine = ModPacketsS2C.isMultiMining();
+            processMultimine = ClassesPacketsS2C.isMultiMining();
         }
 
         if (processMultimine) {

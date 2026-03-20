@@ -7,7 +7,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
-public final class ModEffects {
+public final class ClassesEffects {
     public static RegistryEntry<StatusEffect> STEALTH;
 
     public static void register() {

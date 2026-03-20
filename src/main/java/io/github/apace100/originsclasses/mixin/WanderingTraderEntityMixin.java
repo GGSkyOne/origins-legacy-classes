@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.networking.ModPackets;
+import io.github.apace100.originsclasses.networking.ClassesPackets;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.passive.WanderingTraderEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,6 +27,6 @@ public class WanderingTraderEntityMixin {
             return;
         }
 
-        ServerPlayNetworking.send((ServerPlayerEntity) player, new ModPackets.TraderTypePayload(true));
+        ServerPlayNetworking.send((ServerPlayerEntity) player, new ClassesPackets.TraderTypePayload(true));
     }
 }
