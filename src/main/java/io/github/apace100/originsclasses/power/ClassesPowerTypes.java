@@ -7,7 +7,7 @@ import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.apace100.originsclasses.OriginsClasses;
 import net.minecraft.util.Identifier;
 
-public class ClassPowerTypes {
+public class ClassesPowerTypes {
     /* Farmer
     * MORE_CROP_DROPS - When harvesting crops, there is a chance that you receive twice the yield.
     * BETTER_BONE_MEAL - Bone meal is twice as effective in your experienced hands when used on crops and plants.

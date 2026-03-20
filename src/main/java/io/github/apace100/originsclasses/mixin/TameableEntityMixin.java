@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import io.github.apace100.originsclasses.util.EntityUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -20,7 +20,7 @@ public abstract class TameableEntityMixin extends AnimalEntity {
 
     @Inject(method = "setOwner", at = @At("HEAD"))
     private void applyBeastmasterBoost(PlayerEntity player, CallbackInfo ci) {
-        if (ClassPowerTypes.TAMED_ANIMAL_BOOST.isActive(player)) {
+        if (ClassesPowerTypes.TAMED_ANIMAL_BOOST.isActive(player)) {
             EntityUtil.addBeastmasterAttributes(this);
         }
     }

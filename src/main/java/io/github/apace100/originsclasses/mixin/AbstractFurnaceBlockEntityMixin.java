@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -44,7 +44,7 @@ public abstract class AbstractFurnaceBlockEntityMixin extends LockableContainerB
         float regularXp = abstractCookingRecipe.getExperience();
 
         if (playerTakingStacks != null) {
-            if (ClassPowerTypes.MORE_SMOKER_XP.isActive(playerTakingStacks)) {
+            if (ClassesPowerTypes.MORE_SMOKER_XP.isActive(playerTakingStacks)) {
                 return regularXp * 2F;
             }
         }

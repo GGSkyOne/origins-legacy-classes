@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import io.github.apace100.originsclasses.util.EntityUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.*;
@@ -20,7 +20,7 @@ public class ChildCreationMixin {
 
         @Inject(method = "createChild*", at = @At("RETURN"))
         private void applyBeastmasterBoost(ServerWorld serverWorld, PassiveEntity passiveEntity, CallbackInfoReturnable<WolfEntity> cir) {
-            if (ClassPowerTypes.TAMED_ANIMAL_BOOST.isActive(this.getOwner())) {
+            if (ClassesPowerTypes.TAMED_ANIMAL_BOOST.isActive(this.getOwner())) {
                 EntityUtil.addBeastmasterAttributes(cir.getReturnValue());
             }
         }
@@ -34,7 +34,7 @@ public class ChildCreationMixin {
 
         @Inject(method = "createChild*", at = @At("RETURN"))
         private void applyBeastmasterBoost(ServerWorld serverWorld, PassiveEntity passiveEntity, CallbackInfoReturnable<CatEntity> cir) {
-            if (ClassPowerTypes.TAMED_ANIMAL_BOOST.isActive(this.getOwner())) {
+            if (ClassesPowerTypes.TAMED_ANIMAL_BOOST.isActive(this.getOwner())) {
                 EntityUtil.addBeastmasterAttributes(cir.getReturnValue());
             }
         }
@@ -48,7 +48,7 @@ public class ChildCreationMixin {
 
         @Inject(method = "createChild", at = @At("RETURN"))
         private void applyBeastmasterBoost(ServerWorld serverWorld, PassiveEntity passiveEntity, CallbackInfoReturnable<HorseEntity> cir) {
-            if (ClassPowerTypes.TAMED_ANIMAL_BOOST.isActive(serverWorld.getPlayerByUuid(this.getOwnerUuid()))) {
+            if (ClassesPowerTypes.TAMED_ANIMAL_BOOST.isActive(serverWorld.getPlayerByUuid(this.getOwnerUuid()))) {
                 EntityUtil.addBeastmasterAttributes(cir.getReturnValue());
             }
         }

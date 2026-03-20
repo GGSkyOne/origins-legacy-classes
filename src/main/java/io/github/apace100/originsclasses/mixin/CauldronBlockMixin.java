@@ -1,7 +1,7 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.originsclasses.component.ClassesComponents;
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.block.*;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
@@ -34,7 +34,7 @@ public abstract class CauldronBlockMixin {
         cancellable = true
     )
     private void extendPotionDuration(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ItemActionResult> cir) {
-        if (state.isOf(Blocks.WATER_CAULDRON) && ClassPowerTypes.LONGER_POTIONS.isActive(player)) {
+        if (state.isOf(Blocks.WATER_CAULDRON) && ClassesPowerTypes.LONGER_POTIONS.isActive(player)) {
             int level = state.get(LeveledCauldronBlock.LEVEL);
 
             if (stack.getItem() instanceof PotionItem && level > 0 && !Boolean.TRUE.equals(stack.get(ClassesComponents.EXTENDED_BY_CLERIC))) {

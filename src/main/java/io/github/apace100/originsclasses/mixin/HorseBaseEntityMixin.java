@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import io.github.apace100.originsclasses.util.EntityUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AbstractHorseEntity;
@@ -17,7 +17,7 @@ public class HorseBaseEntityMixin {
         at = @At("TAIL")
     )
     private void applyBeastmasterAttributes(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-        if (ClassPowerTypes.TAMED_ANIMAL_BOOST.isActive(player)) {
+        if (ClassesPowerTypes.TAMED_ANIMAL_BOOST.isActive(player)) {
             EntityUtil.addBeastmasterAttributes((LivingEntity)(Object)this);
         }
     }

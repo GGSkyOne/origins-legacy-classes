@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +27,7 @@ public class AnimalMateGoalMixin {
     private void produceAdditionalBaby(CallbackInfo ci) {
         PlayerEntity lovingPlayer = this.animal.getLovingPlayer();
 
-        if (lovingPlayer != null && ClassPowerTypes.TWIN_BREEDING.isActive(lovingPlayer)) {
+        if (lovingPlayer != null && ClassesPowerTypes.TWIN_BREEDING.isActive(lovingPlayer)) {
             if (this.animal.getWorld().getRandom().nextInt(5) == 0) {
                 animal.breed((ServerWorld) animal.getWorld(), this.mate);
             }

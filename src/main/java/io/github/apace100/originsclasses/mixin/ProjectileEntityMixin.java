@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +16,7 @@ public class ProjectileEntityMixin {
         argsOnly = true
     )
     private float modifyDivergence(float oldDivergence, Entity user) {
-        if (ClassPowerTypes.NO_PROJECTILE_DIVERGENCE.isActive(user)) {
+        if (ClassesPowerTypes.NO_PROJECTILE_DIVERGENCE.isActive(user)) {
             return 0F;
         }
 

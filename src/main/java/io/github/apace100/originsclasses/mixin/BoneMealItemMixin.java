@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
 import net.minecraft.item.BoneMealItem;
@@ -30,7 +30,7 @@ public class BoneMealItemMixin {
         )
     )
     private void saveFarmerForLater(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
-        if (context.getPlayer() != null && ClassPowerTypes.BETTER_BONE_MEAL.isActive(context.getPlayer())) {
+        if (context.getPlayer() != null && ClassesPowerTypes.BETTER_BONE_MEAL.isActive(context.getPlayer())) {
             isFarmer = true;
         }
     }

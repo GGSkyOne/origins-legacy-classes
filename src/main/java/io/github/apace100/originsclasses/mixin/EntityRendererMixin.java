@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -21,7 +21,7 @@ public class EntityRendererMixin {
         ordinal = 0
     )
     private boolean modifyUnsneakyState(boolean original, Entity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        if (ClassPowerTypes.SNEAKY.isActive(entity)) {
+        if (ClassesPowerTypes.SNEAKY.isActive(entity)) {
             return false;
         }
 

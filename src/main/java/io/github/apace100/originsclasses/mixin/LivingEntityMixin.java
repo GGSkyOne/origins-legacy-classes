@@ -1,7 +1,7 @@
 package io.github.apace100.originsclasses.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -36,7 +36,7 @@ public abstract class LivingEntityMixin extends Entity {
         if (
             causedByPlayer &&
             (Object)this instanceof AnimalEntity &&
-            ClassPowerTypes.MORE_ANIMAL_LOOT.isActive(damageSource.getAttacker())
+            ClassesPowerTypes.MORE_ANIMAL_LOOT.isActive(damageSource.getAttacker())
         ) {
             if (this.random.nextInt(10) < 3) {
                 lootTable.generateLoot(lootContextParameterSet, ((LivingEntity)(Object)this)::dropStack);
@@ -47,7 +47,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "addStatusEffect*", at = @At("RETURN"))
     private void addStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> ci) {
         if (ci.getReturnValue() && !effect.isAmbient()) {
-            if (ClassPowerTypes.TAMED_POTION_DIFFUSAL.isActive(this)) {
+            if (ClassesPowerTypes.TAMED_POTION_DIFFUSAL.isActive(this)) {
                 getWorld().getEntitiesByClass(
                     TameableEntity.class,
                     getBoundingBox()

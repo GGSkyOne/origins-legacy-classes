@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.screen.ForgingScreenHandler;
@@ -24,7 +24,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         )
     )
     private int halfRepairMaterialCost(int original) {
-        if (ClassPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
+        if (ClassesPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
             return original / 2;
         }
 
@@ -39,7 +39,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         )
     )
     private int doubleCombineRepairDurabilityBonus(int original) {
-        if (ClassPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
+        if (ClassesPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
             return original * 12;
         }
 

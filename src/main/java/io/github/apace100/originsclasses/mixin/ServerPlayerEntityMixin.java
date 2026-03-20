@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +17,7 @@ public class ServerPlayerEntityMixin {
         )
     )
     private void removeSprintingExhaustion(ServerPlayerEntity serverPlayerEntity, float exhaustion) {
-        if (!ClassPowerTypes.NO_SPRINT_EXHAUSTION.isActive(serverPlayerEntity)) {
+        if (!ClassesPowerTypes.NO_SPRINT_EXHAUSTION.isActive(serverPlayerEntity)) {
             serverPlayerEntity.addExhaustion(exhaustion);
         }
     }

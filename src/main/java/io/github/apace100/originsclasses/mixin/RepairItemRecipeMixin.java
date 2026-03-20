@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import io.github.apace100.originsclasses.util.CraftingContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.recipe.RepairItemRecipe;
@@ -22,7 +22,7 @@ public class RepairItemRecipeMixin {
     private int doubleRepairDurabilityBonus(int original, CraftingRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
         PlayerEntity player = CraftingContext.get();
 
-        if (player != null && ClassPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
+        if (player != null && ClassesPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
             return original * 3;
         }
 

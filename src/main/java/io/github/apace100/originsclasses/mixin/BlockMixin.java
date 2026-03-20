@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.block.*;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,7 +21,7 @@ public class BlockMixin {
     @Inject(method = "afterBreak", at = @At("TAIL"))
     private void dropAdditionalCrops(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack, CallbackInfo ci) {
         if (state.getBlock() instanceof CropBlock || state.isOf(Blocks.MELON)) {
-            if (player != null && ClassPowerTypes.MORE_CROP_DROPS.isActive(player) && new Random().nextInt(10) < 3) {
+            if (player != null && ClassesPowerTypes.MORE_CROP_DROPS.isActive(player) && new Random().nextInt(10) < 3) {
                 dropStacks(state, world, pos, blockEntity, player, stack);
             }
         }
@@ -34,7 +34,7 @@ public class BlockMixin {
         )
     )
     private float preventBlockMiningExhaustion(float exhaustion, World world, PlayerEntity playerEntity) {
-        if (ClassPowerTypes.NO_MINING_EXHAUSTION.isActive(playerEntity)) {
+        if (ClassesPowerTypes.NO_MINING_EXHAUSTION.isActive(playerEntity)) {
             return 0F;
         }
 

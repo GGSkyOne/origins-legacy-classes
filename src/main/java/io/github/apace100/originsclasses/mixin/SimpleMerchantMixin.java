@@ -1,7 +1,7 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.originsclasses.networking.ClassesPacketsS2C;
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.village.SimpleMerchant;
 import net.minecraft.village.TradeOffer;
@@ -23,7 +23,7 @@ public class SimpleMerchantMixin {
         )
     )
     private void preventUseClientSide(TradeOffer tradeOffer) {
-        if (ClassesPacketsS2C.isWanderingTrader() || !ClassPowerTypes.TRADE_AVAILABILITY.isActive(player)) {
+        if (ClassesPacketsS2C.isWanderingTrader() || !ClassesPowerTypes.TRADE_AVAILABILITY.isActive(player)) {
             tradeOffer.use();
         }
     }

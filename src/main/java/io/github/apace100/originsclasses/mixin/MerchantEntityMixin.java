@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import io.github.apace100.originsclasses.util.ClassesTags;
 import io.github.apace100.originsclasses.util.ItemUtil;
 import io.github.apace100.originsclasses.util.TagUtil;
@@ -52,7 +52,7 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
         )
     )
     private void dontUseUpTrades(TradeOffer tradeOffer) {
-        if (((Object)this instanceof WanderingTraderEntity) || !ClassPowerTypes.TRADE_AVAILABILITY.isActive(this.customer)) {
+        if (((Object)this instanceof WanderingTraderEntity) || !ClassesPowerTypes.TRADE_AVAILABILITY.isActive(this.customer)) {
             tradeOffer.use();
         }
     }
@@ -60,7 +60,7 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
     @Inject(method = "setCustomer", at = @At("HEAD"))
     private void addAdditionalOffers(PlayerEntity customer, CallbackInfo ci) {
         if ((Object)this instanceof WanderingTraderEntity) {
-            if (ClassPowerTypes.RARE_WANDERING_LOOT.isActive(customer)) {
+            if (ClassesPowerTypes.RARE_WANDERING_LOOT.isActive(customer)) {
                 if (additionalOffers == null) {
                     offerCountWithoutAdditional = offers.size();
                     additionalOffers = buildAdditionalOffers();

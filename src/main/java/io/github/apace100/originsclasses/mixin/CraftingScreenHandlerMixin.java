@@ -3,7 +3,7 @@ package io.github.apace100.originsclasses.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.originsclasses.OriginsClasses;
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import io.github.apace100.originsclasses.component.ClassesComponents;
 import io.github.apace100.originsclasses.power.CraftAmountPower;
 import io.github.apace100.originsclasses.util.CraftingContext;
@@ -66,7 +66,7 @@ public class CraftingScreenHandlerMixin {
         )
     )
     private static void modifyCraftingResult(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, @Local ItemStack itemStack) {
-        if (itemStack.contains(DataComponentTypes.FOOD) && ClassPowerTypes.BETTER_CRAFTED_FOOD.isActive(player)) {
+        if (itemStack.contains(DataComponentTypes.FOOD) && ClassesPowerTypes.BETTER_CRAFTED_FOOD.isActive(player)) {
             FoodComponent food = itemStack.get(DataComponentTypes.FOOD);
 
             int foodBonus = (int)Math.ceil((float)food.nutrition() / 3F);
@@ -78,7 +78,7 @@ public class CraftingScreenHandlerMixin {
             itemStack.set(ClassesComponents.FOOD_BONUS, foodBonus);
         }
 
-        if (ClassPowerTypes.QUALITY_EQUIPMENT.isActive(player) && isEquipment(itemStack)) {
+        if (ClassesPowerTypes.QUALITY_EQUIPMENT.isActive(player) && isEquipment(itemStack)) {
             boolean recipeContainsEquipment = false;
 
             for (int i = 0; i < craftingInventory.size() && !recipeContainsEquipment; i++) {

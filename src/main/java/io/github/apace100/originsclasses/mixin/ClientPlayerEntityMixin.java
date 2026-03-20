@@ -1,7 +1,7 @@
 package io.github.apace100.originsclasses.mixin;
 
 import com.mojang.authlib.GameProfile;
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -31,11 +31,11 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     private float modifyItemUseSlowdown(float originalSlowdown) {
         ItemStack stackInUse = this.getStackInHand(this.getActiveHand());
 
-        if (stackInUse.getItem() instanceof ShieldItem && ClassPowerTypes.LESS_SHIELD_SLOWDOWN.isActive(this)) {
+        if (stackInUse.getItem() instanceof ShieldItem && ClassesPowerTypes.LESS_SHIELD_SLOWDOWN.isActive(this)) {
             return 0.6F;
         }
 
-        if (stackInUse.getItem() instanceof BowItem && ClassPowerTypes.LESS_BOW_SLOWDOWN.isActive(this)) {
+        if (stackInUse.getItem() instanceof BowItem && ClassesPowerTypes.LESS_BOW_SLOWDOWN.isActive(this)) {
             return 0.6F;
         }
 

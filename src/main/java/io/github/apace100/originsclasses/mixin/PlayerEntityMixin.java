@@ -2,7 +2,7 @@ package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.apace100.originsclasses.effect.ClassesEffects;
-import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -56,8 +56,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             }
         }
 
-        if (ClassPowerTypes.STEALTH.isActive(this)) {
-            VariableIntPower stealthCounter = ClassPowerTypes.STEALTH.get(this);
+        if (ClassesPowerTypes.STEALTH.isActive(this)) {
+            VariableIntPower stealthCounter = ClassesPowerTypes.STEALTH.get(this);
             stealthCounter.setValue(stealthCounter.getMin());
         }
 
@@ -70,8 +70,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tickStealthCounter(CallbackInfo ci) {
-        if (ClassPowerTypes.STEALTH.isActive(this)) {
-            VariableIntPower stealthCounter = ClassPowerTypes.STEALTH.get(this);
+        if (ClassesPowerTypes.STEALTH.isActive(this)) {
+            VariableIntPower stealthCounter = ClassesPowerTypes.STEALTH.get(this);
 
             if (this.isSneaking()) {
                 if (stealthCounter.increment() == stealthCounter.getMax()) {
