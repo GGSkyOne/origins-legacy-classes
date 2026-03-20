@@ -5,9 +5,9 @@ import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.originsclasses.OriginsClasses;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.AxeItem;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -64,8 +64,7 @@ public class LumberjackPower extends MultiMinePower {
 
                                     return new ArrayList<>(affected);
                                 }
-                            } else if ((state.isIn(BlockTags.LEAVES) || state.getBlock() instanceof LeavesBlock)
-                                    && !state.get(LeavesBlock.PERSISTENT)) {
+                            } else if (state.isIn(BlockTags.LEAVES) && !state.get(LeavesBlock.PERSISTENT)) {
                                 foundOneWithLeaves = true;
                             }
                         }

@@ -1,5 +1,7 @@
 {
-  "layer.origins-classes.class": "Classe",
+  "layer.origins-classes.class.name": "Classe",
+  "layer.origins-classes.class.missing_origin.name": "Missing",
+  "layer.origins-classes.class.missing_origin.description": "You do not have a class.",
 
   "origins-classes.food_bonus": "Nutrição: +%s",
   "origins-classes.mining_speed_bonus": "Velocidade de Mineração: %s",

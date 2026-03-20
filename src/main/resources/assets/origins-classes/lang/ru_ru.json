@@ -1,5 +1,5 @@
 {
-  "layer.origins-classes.class": "Класс",
+  "layer.origins-classes.class.name": "Класс",
   "layer.origins-classes.class.missing_origin.name": "Отсутствует",
   "layer.origins-classes.class.missing_origin.description": "У вас нет класса.",
 

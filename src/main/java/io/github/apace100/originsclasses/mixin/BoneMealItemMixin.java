@@ -55,8 +55,8 @@ public class BoneMealItemMixin {
             BlockState blockState = world.getBlockState(pos);
             Fertilizable fertilizable = (Fertilizable)blockState.getBlock();
 
-            if (fertilizable.canGrow(world, world.random, pos, blockState)) {
-                fertilizable.grow((ServerWorld)world, world.random, pos, blockState);
+            if (fertilizable.canGrow(world, world.getRandom(), pos, blockState)) {
+                fertilizable.grow((ServerWorld)world, world.getRandom(), pos, blockState);
             }
         }
     }

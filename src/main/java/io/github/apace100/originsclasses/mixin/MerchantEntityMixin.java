@@ -67,7 +67,7 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
                 }
 
                 this.offers.addAll(additionalOffers);
-            } else if(additionalOffers != null) {
+            } else if (additionalOffers != null) {
                 while (this.offers.size() > offerCountWithoutAdditional) {
                     this.offers.removeLast();
                 }

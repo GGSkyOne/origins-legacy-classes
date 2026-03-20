@@ -8,10 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Random;
 
 import static net.minecraft.block.Block.dropStacks;
 
@@ -20,7 +21,7 @@ public class BlockMixin {
     @Inject(method = "afterBreak", at = @At("TAIL"))
     private void dropAdditionalCrops(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack, CallbackInfo ci) {
         if (state.getBlock() instanceof CropBlock || state.isOf(Blocks.MELON)) {
-            if (player != null && ClassesPowerTypes.MORE_CROP_DROPS.isActive(player) && new Random().nextInt(10) < 3) {
+            if (player != null && ClassesPowerTypes.MORE_CROP_DROPS.isActive(player) && world.getRandom().nextInt(10) < 3) {
                 dropStacks(state, world, pos, blockEntity, player, stack);
             }
         }

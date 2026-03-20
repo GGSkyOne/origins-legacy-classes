@@ -40,7 +40,7 @@ import java.util.Optional;
 @Mixin(CraftingScreenHandler.class)
 public class CraftingScreenHandlerMixin {
     @Unique
-    private static Optional<CraftingRecipe> classes$CachedRecipe;
+    private static Optional<CraftingRecipe> cachedRecipe;
 
     @Inject(method = "updateResult", at = @At("HEAD"))
     private static void saveCraftingPlayer(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci) {
@@ -55,7 +55,7 @@ public class CraftingScreenHandlerMixin {
         )
     )
     private static void cacheRecipe(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci, @Local Optional<CraftingRecipe> optional) {
-        classes$CachedRecipe = optional;
+        cachedRecipe = optional;
     }
 
     @Inject(
@@ -71,7 +71,7 @@ public class CraftingScreenHandlerMixin {
 
             int foodBonus = (int)Math.ceil((float)food.nutrition() / 3F);
 
-            if(foodBonus < 1) {
+            if (foodBonus < 1) {
                 foodBonus = 1;
             }
 
@@ -87,7 +87,7 @@ public class CraftingScreenHandlerMixin {
                 }
             }
 
-            if (classes$CachedRecipe.isPresent() && classes$CachedRecipe.get() instanceof RepairItemRecipe) {
+            if (cachedRecipe.isPresent() && cachedRecipe.get() instanceof RepairItemRecipe) {
                 recipeContainsEquipment = false;
             }
 
@@ -99,7 +99,7 @@ public class CraftingScreenHandlerMixin {
         int baseValue = itemStack.getCount();
         int newValue = (int) PowerHolderComponent.modify(player, CraftAmountPower.class, baseValue, (p -> p.doesApply(itemStack)));
 
-        if(newValue != baseValue) {
+        if (newValue != baseValue) {
             itemStack.setCount(newValue < 0 ? 0 : Math.min(newValue, itemStack.getMaxCount()));
         }
     }
@@ -175,13 +175,13 @@ public class CraftingScreenHandlerMixin {
 
         Item item = stack.getItem();
 
-        if(item instanceof ArmorItem)
+        if (item instanceof ArmorItem)
             return true;
 
-        if(item instanceof ToolItem)
+        if (item instanceof ToolItem)
             return true;
 
-        if(item instanceof RangedWeaponItem)
+        if (item instanceof RangedWeaponItem)
             return true;
 
         if (item instanceof ShieldItem)

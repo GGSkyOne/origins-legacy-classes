@@ -1,6 +1,7 @@
-
 {
-  "layer.origins-classes.class": "职业",
+  "layer.origins-classes.class.name": "职业",
+  "layer.origins-classes.class.missing_origin.name": "Missing",
+  "layer.origins-classes.class.missing_origin.description": "You do not have a class.",
 
   "origins-classes.food_bonus": "营养: +%s",
   "origins-classes.mining_speed_bonus": "挖掘速度: %s",
