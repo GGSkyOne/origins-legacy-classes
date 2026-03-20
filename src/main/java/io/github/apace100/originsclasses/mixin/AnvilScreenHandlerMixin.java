@@ -16,7 +16,13 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         super(type, syncId, playerInventory, context);
     }
 
-    @ModifyConstant(method = "updateResult", constant = @Constant(intValue = 4, ordinal = 0))
+    @ModifyConstant(
+        method = "updateResult",
+        constant = @Constant(
+            intValue = 4,
+            ordinal = 0
+        )
+    )
     private int halfRepairMaterialCost(int original) {
         if (ClassPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
             return original / 2;
@@ -25,7 +31,13 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         return original;
     }
 
-    @ModifyConstant(method = "updateResult", constant = @Constant(intValue = 12, ordinal = 0))
+    @ModifyConstant(
+        method = "updateResult",
+        constant = @Constant(
+            intValue = 12,
+            ordinal = 0
+        )
+    )
     private int doubleCombineRepairDurabilityBonus(int original) {
         if (ClassPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
             return original * 12;

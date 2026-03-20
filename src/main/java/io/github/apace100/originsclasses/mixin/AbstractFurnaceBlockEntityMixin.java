@@ -33,7 +33,13 @@ public abstract class AbstractFurnaceBlockEntityMixin extends LockableContainerB
         }
     }
 
-    @Redirect(method = "method_17761", at = @At(value = "INVOKE", target = "Lnet/minecraft/recipe/AbstractCookingRecipe;getExperience()F"))
+    @Redirect(
+        method = "method_17761",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/recipe/AbstractCookingRecipe;getExperience()F"
+        )
+    )
     private static float modifyExperienceGain(AbstractCookingRecipe abstractCookingRecipe) {
         float regularXp = abstractCookingRecipe.getExperience();
 

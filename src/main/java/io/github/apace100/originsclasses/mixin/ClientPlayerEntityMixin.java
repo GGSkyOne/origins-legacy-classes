@@ -22,7 +22,12 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Shadow public abstract Hand getActiveHand();
 
-    @ModifyConstant(method = "tickMovement", constant = @Constant(floatValue = 0.2F))
+    @ModifyConstant(
+        method = "tickMovement",
+        constant = @Constant(
+            floatValue = 0.2F
+        )
+    )
     private float modifyItemUseSlowdown(float originalSlowdown) {
         ItemStack stackInUse = this.getStackInHand(this.getActiveHand());
 

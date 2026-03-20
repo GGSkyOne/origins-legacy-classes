@@ -44,7 +44,13 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
         super(entityType, world);
     }
 
-    @Redirect(method = "trade", at = @At(value = "INVOKE", target = "Lnet/minecraft/village/TradeOffer;use()V"))
+    @Redirect(
+        method = "trade",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/village/TradeOffer;use()V"
+        )
+    )
     private void dontUseUpTrades(TradeOffer tradeOffer) {
         if (((Object)this instanceof WanderingTraderEntity) || !ClassPowerTypes.TRADE_AVAILABILITY.isActive(this.customer)) {
             tradeOffer.use();

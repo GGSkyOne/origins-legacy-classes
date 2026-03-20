@@ -42,10 +42,7 @@ public class CraftingScreenHandlerMixin {
     @Unique
     private static Optional<CraftingRecipe> classes$CachedRecipe;
 
-    @Inject(
-        method = "updateResult",
-        at = @At("HEAD")
-    )
+    @Inject(method = "updateResult", at = @At("HEAD"))
     private static void saveCraftingPlayer(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci) {
         CraftingContext.craftingPlayer = player;
     }

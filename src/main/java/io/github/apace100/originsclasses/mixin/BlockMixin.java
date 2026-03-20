@@ -27,7 +27,12 @@ public class BlockMixin {
         }
     }
 
-    @ModifyConstant(method = "afterBreak", constant = @Constant(floatValue = 0.005F))
+    @ModifyConstant(
+        method = "afterBreak",
+        constant = @Constant(
+            floatValue = 0.005F
+        )
+    )
     private float preventBlockMiningExhaustion(float exhaustion, World world, PlayerEntity playerEntity) {
         if (ClassPowerTypes.NO_MINING_EXHAUSTION.isActive(playerEntity)) {
             return 0F;

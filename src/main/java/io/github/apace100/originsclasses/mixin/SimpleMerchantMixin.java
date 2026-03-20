@@ -15,7 +15,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class SimpleMerchantMixin {
     @Shadow @Final private PlayerEntity player;
 
-    @Redirect(method = "trade", at = @At(value = "INVOKE", target = "Lnet/minecraft/village/TradeOffer;use()V"))
+    @Redirect(
+        method = "trade",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/village/TradeOffer;use()V"
+        )
+    )
     private void preventUseClientSide(TradeOffer tradeOffer) {
         if (ModPacketsS2C.isWanderingTrader || !ClassPowerTypes.TRADE_AVAILABILITY.isActive(player)) {
             tradeOffer.use();

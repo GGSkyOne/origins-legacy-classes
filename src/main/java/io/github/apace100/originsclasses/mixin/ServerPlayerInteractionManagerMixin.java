@@ -48,10 +48,7 @@ public abstract class ServerPlayerInteractionManagerMixin implements SneakingSta
         ServerPlayNetworking.send(player, new ModPackets.MultiMiningPayload(!wasSneakingWhenStarted));
     }
 
-    @Inject(
-        method = "finishMining",
-        at = @At("HEAD")
-    )
+    @Inject(method = "finishMining", at = @At("HEAD"))
     private void saveBlockStateForMultiMine(BlockPos pos, int sequence, String reason, CallbackInfo ci) {
         justMinedBlockState = world.getBlockState(pos);
     }

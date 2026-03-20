@@ -12,7 +12,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractHorseEntity.class)
 public class HorseBaseEntityMixin {
-    @Inject(method = "bondWithPlayer", at = @At("TAIL"))
+    @Inject(
+        method = "bondWithPlayer",
+        at = @At("TAIL")
+    )
     private void applyBeastmasterAttributes(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
         if (ClassPowerTypes.TAMED_ANIMAL_BOOST.isActive(player)) {
             EntityUtil.addBeastmasterAttributes((LivingEntity)(Object)this);

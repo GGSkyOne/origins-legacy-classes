@@ -44,10 +44,7 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @Inject(
-        method = "addStatusEffect*",
-        at = @At("RETURN")
-    )
+    @Inject(method = "addStatusEffect*", at = @At("RETURN"))
     private void addStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> ci) {
         if (ci.getReturnValue() && !effect.isAmbient()) {
             if (ClassPowerTypes.TAMED_POTION_DIFFUSAL.isActive(this)) {

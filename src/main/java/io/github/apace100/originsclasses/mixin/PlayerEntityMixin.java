@@ -68,10 +68,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         return modifiedDamage;
     }
 
-    @Inject(
-        method = "tick",
-        at = @At("TAIL")
-    )
+    @Inject(method = "tick", at = @At("TAIL"))
     private void tickStealthCounter(CallbackInfo ci) {
         if (ClassPowerTypes.STEALTH.isActive(this)) {
             VariableIntPower stealthCounter = ClassPowerTypes.STEALTH.get(this);

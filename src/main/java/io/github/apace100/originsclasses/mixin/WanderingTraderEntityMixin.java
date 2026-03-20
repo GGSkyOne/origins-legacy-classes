@@ -14,7 +14,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WanderingTraderEntity.class)
 public class WanderingTraderEntityMixin {
-    @Inject(method = "interactMob", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/WanderingTraderEntity;sendOffers(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/text/Text;I)V", shift = At.Shift.AFTER))
+    @Inject(
+        method = "interactMob",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/entity/passive/WanderingTraderEntity;sendOffers(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/text/Text;I)V",
+            shift = At.Shift.AFTER
+        )
+    )
     private void sendTraderType(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         if (player.getWorld().isClient) {
             return;

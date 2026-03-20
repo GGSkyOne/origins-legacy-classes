@@ -8,13 +8,21 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperMixin {
-
-    @ModifyVariable(method = "generateEnchantments", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/Item;getEnchantability()I"), ordinal = 0)
+    @ModifyVariable(
+        method = "generateEnchantments",
+        at = @At(
+            value = "INVOKE_ASSIGN",
+            target = "Lnet/minecraft/item/Item;getEnchantability()I"
+        ),
+        ordinal = 0,
+        argsOnly = true
+    )
     private static int modifyEnchantabilityForClerics(int original) {
-        if(original > 0 && OriginsClasses.isClericEnchanting) {
+        if (original > 0 && OriginsClasses.isClericEnchanting) {
             OriginsClasses.isClericEnchanting = false;
             return original + 10;
         }
+
         return original;
     }
 }
