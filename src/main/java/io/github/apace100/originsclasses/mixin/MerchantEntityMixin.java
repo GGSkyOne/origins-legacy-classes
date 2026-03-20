@@ -114,12 +114,12 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
                 ),
                 ItemUtil.createMerchantItemStack(
                     ItemUtil.getRandomObtainableItem(
-                        this.getWorld().getServer(),
+                        this.getEntityWorld().getServer(),
                         random,
                         excludedItems
                     ),
                     random,
-                    this.getWorld()
+                    this.getEntityWorld()
                 ),
                 1,
                 5,
@@ -127,7 +127,7 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
         );
 
         Item desiredItem = ItemUtil.getRandomObtainableItem(
-            this.getWorld().getServer(),
+            this.getEntityWorld().getServer(),
             random,
             excludedItems
         );
@@ -140,12 +140,12 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
                 ),
                 ItemUtil.createMerchantItemStack(
                     ItemUtil.getRandomObtainableItem(
-                        this.getWorld().getServer(),
+                        this.getEntityWorld().getServer(),
                         random,
                         excludedItems
                     ),
                     random,
-                    this.getWorld()
+                    this.getEntityWorld()
                 ),
                 1,
                 5,

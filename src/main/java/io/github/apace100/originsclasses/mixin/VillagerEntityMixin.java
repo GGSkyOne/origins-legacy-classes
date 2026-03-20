@@ -21,7 +21,7 @@ public class VillagerEntityMixin {
         )
     )
     private void sendTraderType(PlayerEntity customer, CallbackInfo ci) {
-        if (customer.getWorld().isClient) {
+        if (customer.getEntityWorld().isClient()) {
             return;
         }
 

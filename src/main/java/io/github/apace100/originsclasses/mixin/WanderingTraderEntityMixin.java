@@ -23,7 +23,7 @@ public class WanderingTraderEntityMixin {
         )
     )
     private void sendTraderType(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if (player.getWorld().isClient) {
+        if (player.getEntityWorld().isClient()) {
             return;
         }
 

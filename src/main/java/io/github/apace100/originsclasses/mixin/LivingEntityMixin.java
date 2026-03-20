@@ -48,7 +48,7 @@ public abstract class LivingEntityMixin extends Entity {
     private void addStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> ci) {
         if (ci.getReturnValue() && !effect.isAmbient()) {
             if (ClassesPowerTypes.TAMED_POTION_DIFFUSAL.isActive(this)) {
-                getWorld().getEntitiesByClass(
+                getEntityWorld().getEntitiesByClass(
                     TameableEntity.class,
                     getBoundingBox()
                         .stretch(8F, 2F, 8F)

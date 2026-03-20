@@ -28,8 +28,8 @@ public class AnimalMateGoalMixin {
         PlayerEntity lovingPlayer = this.animal.getLovingPlayer();
 
         if (lovingPlayer != null && ClassesPowerTypes.TWIN_BREEDING.isActive(lovingPlayer)) {
-            if (this.animal.getWorld().getRandom().nextInt(5) == 0) {
-                animal.breed((ServerWorld) animal.getWorld(), this.mate);
+            if (this.animal.getEntityWorld().getRandom().nextInt(5) == 0) {
+                animal.breed((ServerWorld) animal.getEntityWorld(), this.mate);
             }
         }
     }
