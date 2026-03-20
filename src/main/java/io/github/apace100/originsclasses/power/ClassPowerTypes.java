@@ -7,166 +7,82 @@ import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.apace100.originsclasses.OriginsClasses;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
-
 public class ClassPowerTypes {
-
-    // Rogue
-    public static final PowerType<Power> SNEAKY = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"sneaky"));
-    public static final PowerType<VariableIntPower> STEALTH = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"stealth"));//new PowerType<>((type, player) -> new VariableIntPower(type, player, 0, 0, 200));
-
-    // Warrior
-    public static final PowerType<Power> LESS_SHIELD_SLOWDOWN = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"less_shield_slowdown"));
-    /*public static final PowerType<AttributePower> MORE_ATTACK_DAMAGE = new PowerType<>((type, player) -> {
-        return new AttributePower(type, player, EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier("Warrior attack bonus", 1.0, EntityAttributeModifier.Operation.ADDITION));
-    });*/
-
-    // Ranger
-    public static final PowerType<Power> LESS_BOW_SLOWDOWN = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"less_bow_slowdown"));
-    public static final PowerType<Power> NO_PROJECTILE_DIVERGENCE = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_projectile_divergence"));
-
-    // Beastmaster
-    public static final PowerType<Power> TAMED_ANIMAL_BOOST = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"tamed_animal_boost"));
-    public static final PowerType<Power> TAMED_POTION_DIFFUSAL = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"tamed_potion_diffusal"));
-
-    // Cook
-    public static final PowerType<Power> MORE_SMOKER_XP = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_smoker_xp"));
-    public static final PowerType<Power> BETTER_CRAFTED_FOOD = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"better_crafted_food"));
-
-    // Cleric
-    public static final PowerType<Power> LONGER_POTIONS = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"longer_potions"));
-    public static final PowerType<Power> BETTER_ENCHANTING = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"better_enchanting"));
-
-    // Blacksmith
-    public static final PowerType<Power> QUALITY_EQUIPMENT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"quality_equipment"));
-    public static final PowerType<Power> EFFICIENT_REPAIRS = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"efficient_repairs"));
-
-    // Farmer
+    /* Farmer
+    * MORE_CROP_DROPS - When harvesting crops, there is a chance that you receive twice the yield.
+    * BETTER_BONE_MEAL - Bone meal is twice as effective in your experienced hands when used on crops and plants.
+    */
     public static final PowerType<Power> MORE_CROP_DROPS = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_crop_drops"));
     public static final PowerType<Power> BETTER_BONE_MEAL = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"better_bone_meal"));
 
-    // Rancher
+    /* Rancher
+    * TWIN_BREEDING - Animals bred by you have a chance to produce two babies.
+    * MORE_ANIMAL_LOOT - You are able to sometimes receive more material from killing animals.
+    */
     public static final PowerType<Power> TWIN_BREEDING = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"twin_breeding"));
     public static final PowerType<Power> MORE_ANIMAL_LOOT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_animal_loot"));
 
-    // Merchant
+    /* Miner
+    * NO_MINING_EXHAUSTION - Breaking blocks doesn't cause you to exhaust.
+    */
+    public static final PowerType<Power> NO_MINING_EXHAUSTION = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_mining_exhaustion"));
+
+    /* Cook
+    * MORE_SMOKER_XP - You receive more experience from cooking food in a smoker.
+    * BETTER_CRAFTED_FOOD - Food crafted by you is more saturating.
+    */
+    public static final PowerType<Power> MORE_SMOKER_XP = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"more_smoker_xp"));
+    public static final PowerType<Power> BETTER_CRAFTED_FOOD = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"better_crafted_food"));
+
+    /* Blacksmith
+    * QUALITY_EQUIPMENT - Equipment you create provides small buffs.
+    * EFFICIENT_REPAIRS - Repairing equipment in an anvil costs less material. Repairing by combining equipment restores more durability.
+    */
+    public static final PowerType<Power> QUALITY_EQUIPMENT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"quality_equipment"));
+    public static final PowerType<Power> EFFICIENT_REPAIRS = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"efficient_repairs"));
+
+    /* Cleric
+    * LONGER_POTIONS - As a last step in potion brewing, you can double a potion's duration with water from a cauldron.
+    * BETTER_ENCHANTING - You are able to produce better enchantments at an enchantment table.
+    */
+    public static final PowerType<Power> LONGER_POTIONS = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"longer_potions"));
+    public static final PowerType<Power> BETTER_ENCHANTING = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"better_enchanting"));
+
+    /* Merchant
+    * TRADE_AVAILABILITY - Villagers you trade with never run out of resources to trade for you.
+    * RARE_WANDERING_LOOT - You are able to convince wandering traders to offer some of their rarer items to you.
+    */
     public static final PowerType<Power> TRADE_AVAILABILITY = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"trade_availability"));
     public static final PowerType<Power> RARE_WANDERING_LOOT = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"rare_wandering_loot"));
 
-    // Miner
-    /*public static final PowerType<MultiMinePower> ORE_VEIN_MINING = new PowerType<>((type, player) -> new MultiMinePower(type, player, (pl, bs, bp) -> {
-        List<BlockPos> affected = new LinkedList<>();
-        Queue<BlockPos> queue = new LinkedList<>();
-        queue.add(bp);
-        while(!queue.isEmpty()) {
-            BlockPos pos = queue.remove();
-            for(Direction d : Direction.values()) {
-                BlockPos newPos = pos.offset(d);
-                if(pl.world.getBlockState(newPos).isOf(bs.getBlock()) && !affected.contains(newPos)) {
-                    affected.add(newPos);
-                    queue.add(newPos);
-                    if(affected.size() >= 31) {
-                        return affected;
-                    }
-                }
-            }
-        }
-        return affected;
-    }, state -> state.getBlock() instanceof OreBlock));*/
-    //public static final PowerType<Power> MORE_STONE_BREAK_SPEED = new PowerType<>(Power::new);
-    public static final PowerType<Power> NO_MINING_EXHAUSTION = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_mining_exhaustion"));
-
-    //public static final PowerType<StartingEquipmentPower> EXPLORER_KIT = new PowerType<>((type, player) -> new StartingEquipmentPower(type, player).addStack(new ItemStack(Items.COMPASS)).addStack(new ItemStack(Items.CLOCK)).addStack(new ItemStack(Items.MAP, 9)));
+    /* Explorer
+    * NO_SPRINT_EXHAUSTION - Sprinting doesn't cause you to exhaust.
+    */
     public static final PowerType<Power> NO_SPRINT_EXHAUSTION = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_sprint_exhaustion"));
 
-    // Lumberjack
-    /*public static final PowerType<MultiMinePower> TREE_FELLING = new PowerType<>((type, player) -> (MultiMinePower)new MultiMinePower(type, player, (pl, bs, bp) -> {
-        Set<BlockPos> affected = new HashSet<>();
-        Queue<BlockPos> queue = new LinkedList<>();
-        queue.add(bp);
-        boolean foundOneWithLeaves = false;
-        BlockPos.Mutable pos = bp.mutableCopy();
-        BlockPos.Mutable newPos = bp.mutableCopy();
-        while(!queue.isEmpty()) {
-            pos.set(queue.remove());
-            for(int dx = -1; dx <= 1; dx++) {
-                for(int dy = 0; dy <= 1; dy++) {
-                    for(int dz = -1; dz <= 1; dz++) {
-                        if(dx == 0 & dy == 0 && dz == 0) {
-                            continue;
-                        }
-                        newPos.set(pos.getX() + dx, pos.getY() + dy, pos.getZ() + dz);
-                        BlockState state = pl.world.getBlockState(newPos);
-                        if(state.isOf(bs.getBlock()) && !affected.contains(newPos)) {
-                            BlockPos savedNewPos = newPos.toImmutable();
-                            affected.add(savedNewPos);
-                            queue.add(savedNewPos);
-                            if(affected.size() > 127) {
-                                if(!foundOneWithLeaves) {
-                                    return new ArrayList<>();
-                                }
-                                return new ArrayList<>(affected);
-                            }
-                        } else
-                        if(state.getBlock() instanceof LeavesBlock && !state.get(LeavesBlock.PERSISTENT)) {
-                            foundOneWithLeaves = true;
-                        }
-                    }
-                }
-            }
-        }
-        if(!foundOneWithLeaves) {
-            affected.clear();
-        }
-        return new ArrayList<>(affected);
-    }, state -> state.getBlock().isIn(BlockTags.LOGS)).addCondition(p -> p.getMainHandStack().getItem() instanceof AxeItem));
-    public static final PowerType<Power> MORE_PLANKS_FROM_LOGS = new PowerType<>(Power::new);*/
-/*
-    public static void register() {
-        register("sneaky", SNEAKY);
-        register("stealth", STEALTH);
-        register("stealth_descriptor", STEALTH_DESCRIPTOR);
+    /* Warrior
+    * LESS_SHIELD_SLOWDOWN - You are slowed down less when protecting yourself with a shield.
+    */
+    public static final PowerType<Power> LESS_SHIELD_SLOWDOWN = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"less_shield_slowdown"));
 
-        register("less_shield_slowdown", LESS_SHIELD_SLOWDOWN);
-        register("more_attack_damage", MORE_ATTACK_DAMAGE);
+    /* Archer
+    * LESS_BOW_SLOWDOWN - You can move quicker than others while drawing your bow.
+    * NO_PROJECTILE_DIVERGENCE - All of your projectiles have increased accuracy.
+    */
+    public static final PowerType<Power> LESS_BOW_SLOWDOWN = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"less_bow_slowdown"));
+    public static final PowerType<Power> NO_PROJECTILE_DIVERGENCE = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"no_projectile_divergence"));
 
-        register("less_bow_slowdown", LESS_BOW_SLOWDOWN);
-        register("no_projectile_divergence", NO_PROJECTILE_DIVERGENCE);
+    /* Rogue
+    * SNEAKY - Your nameplate is never visible through walls, even when you're not sneaking
+    * STEALTH - When you have been sneaking for 10 seconds, you enter Stealth.
+    */
+    public static final PowerType<Power> SNEAKY = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"sneaky"));
+    public static final PowerType<VariableIntPower> STEALTH = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"stealth"));
 
-        register("tamed_animal_boost", TAMED_ANIMAL_BOOST);
-        register("tamed_potion_diffusal", TAMED_POTION_DIFFUSAL);
-
-        register("more_smoker_xp", MORE_SMOKER_XP);
-        register("better_crafted_food", BETTER_CRAFTED_FOOD);
-
-        register("longer_potions", LONGER_POTIONS);
-        register("better_enchanting", BETTER_ENCHANTING);
-
-        register("quality_equipment", QUALITY_EQUIPMENT);
-        register("efficient_repairs", EFFICIENT_REPAIRS);
-
-        register("more_crop_drops", MORE_CROP_DROPS);
-        register("better_bone_meal", BETTER_BONE_MEAL);
-
-        register("twin_breeding", TWIN_BREEDING);
-        register("more_animal_loot", MORE_ANIMAL_LOOT);
-
-        register("trade_availability", TRADE_AVAILABILITY);
-        register("rare_wandering_loot", RARE_WANDERING_LOOT);
-
-        register("ore_vein_mining", ORE_VEIN_MINING);
-        register("more_stone_break_speed", MORE_STONE_BREAK_SPEED);
-        register("no_mining_exhaustion", NO_MINING_EXHAUSTION);
-
-        register("tree_felling", TREE_FELLING);
-        register("more_planks_from_logs", MORE_PLANKS_FROM_LOGS);
-
-        register("explorer_kit", EXPLORER_KIT);
-        register("no_sprint_exhaustion", NO_SPRINT_EXHAUSTION);
-    }
-
-    private static void register(String path, PowerType<?> powerType) {
-        Registry.register(ModRegistries.POWER_TYPE, Identifier.of(OriginsClasses.MODID,path), powerType);
-    }
-*/
+    /* Beastmaster
+    * TAMED_ANIMAL_BOOST - Animals you tame receive a permanent buff to their health and strength.
+    * TAMED_POTION_DIFFUSAL - Your nearby tamed animals also receive potion effects when you drink a potion.
+    */
+    public static final PowerType<Power> TAMED_ANIMAL_BOOST = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"tamed_animal_boost"));
+    public static final PowerType<Power> TAMED_POTION_DIFFUSAL = new PowerTypeReference<>(Identifier.of(OriginsClasses.MODID,"tamed_potion_diffusal"));
 }
