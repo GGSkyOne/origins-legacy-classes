@@ -1,7 +1,7 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.OriginsClasses;
 import io.github.apace100.originsclasses.power.ClassPowerTypes;
+import io.github.apace100.originsclasses.util.EnchantmentContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -36,7 +36,7 @@ public class EnchantmentScreenHandlerMixin {
         )
     )
     private void saveEnchanterForPreview(ItemStack stack, World world, BlockPos pos, CallbackInfo ci) {
-        OriginsClasses.isClericEnchanting = ClassPowerTypes.BETTER_ENCHANTING.isActive(enchanter);
+        EnchantmentContext.setClericEnchanting(ClassPowerTypes.BETTER_ENCHANTING.isActive(enchanter));
     }
 
     @Inject(
@@ -47,6 +47,6 @@ public class EnchantmentScreenHandlerMixin {
         )
     )
     private void saveEnchanter(ItemStack itemStack, int id, PlayerEntity playerEntity, int level, ItemStack stack2, World world, BlockPos pos, CallbackInfo ci) {
-        OriginsClasses.isClericEnchanting = ClassPowerTypes.BETTER_ENCHANTING.isActive(playerEntity);
+        EnchantmentContext.setClericEnchanting(ClassPowerTypes.BETTER_ENCHANTING.isActive(playerEntity));
     }
 }

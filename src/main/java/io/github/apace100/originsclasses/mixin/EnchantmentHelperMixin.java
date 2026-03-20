@@ -1,6 +1,6 @@
 package io.github.apace100.originsclasses.mixin;
 
-import io.github.apace100.originsclasses.OriginsClasses;
+import io.github.apace100.originsclasses.util.EnchantmentContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,8 +18,8 @@ public class EnchantmentHelperMixin {
         argsOnly = true
     )
     private static int modifyEnchantabilityForClerics(int original) {
-        if (original > 0 && OriginsClasses.isClericEnchanting) {
-            OriginsClasses.isClericEnchanting = false;
+        if (original > 0 && EnchantmentContext.isClericEnchanting()) {
+            EnchantmentContext.setClericEnchanting(false);
             return original + 10;
         }
 
