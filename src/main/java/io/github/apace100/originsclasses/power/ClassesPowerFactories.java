@@ -20,8 +20,8 @@ import net.minecraft.util.math.BlockPos;
 import java.util.*;
 
 public class ClassesPowerFactories {
+    private static final int LUMBERJACK_BLOCK_LIMIT = 255;
 
-    @SuppressWarnings("unchecked")
     public static void register() {
         register(new PowerFactory<>(Identifier.of(OriginsClasses.MODID, "craft_amount"),
             new SerializableData()
@@ -38,12 +38,13 @@ public class ClassesPowerFactories {
                     );
                     return power;
                 }));
+
         register(new PowerFactory<>(Identifier.of(OriginsClasses.MODID, "lumberjack"),
             new SerializableData(),
             data ->
                 (type, entity) -> new MultiMinePower(type, entity, (pl, bs, bp) -> {
                         Set<BlockPos> affected = new HashSet<>();
-                        Queue<BlockPos> queue = new LinkedList<>();
+                        Deque<BlockPos> queue = new ArrayDeque<>();
                         queue.add(bp);
                         boolean foundOneWithLeaves = false;
                         BlockPos.Mutable pos = bp.mutableCopy();
@@ -53,7 +54,7 @@ public class ClassesPowerFactories {
                             for(int dx = -1; dx <= 1; dx++) {
                                 for(int dy = 0; dy <= 1; dy++) {
                                     for(int dz = -1; dz <= 1; dz++) {
-                                        if(dx == 0 & dy == 0 && dz == 0) {
+                                        if(dx == 0 && dy == 0 && dz == 0) {
                                             continue;
                                         }
                                         newPos.set(pos.getX() + dx, pos.getY() + dy, pos.getZ() + dz);
@@ -62,7 +63,7 @@ public class ClassesPowerFactories {
                                             BlockPos savedNewPos = newPos.toImmutable();
                                             affected.add(savedNewPos);
                                             queue.add(savedNewPos);
-                                            if(affected.size() > 255) {
+                                            if(affected.size() > LUMBERJACK_BLOCK_LIMIT) {
                                                 if(!foundOneWithLeaves) {
                                                     return new ArrayList<>();
                                                 }
@@ -82,6 +83,7 @@ public class ClassesPowerFactories {
                         return new ArrayList<>(affected);
                     }, state -> state.isIn(BlockTags.LOGS)).addCondition(e -> e instanceof LivingEntity l && l.getMainHandStack().getItem() instanceof AxeItem)
                 ));
+
         register(new PowerFactory<>(Identifier.of(OriginsClasses.MODID, "variable_int"),
             new SerializableData()
                 .add("start_value", SerializableDataTypes.INT, null)

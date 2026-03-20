@@ -40,13 +40,15 @@ public class ItemUtil {
 
         if (exclude == null || exclude.isEmpty()) {
             return OBTAINABLE_ARRAY[random.nextInt(OBTAINABLE_ARRAY.length)];
-        } else {
-            Set<Item> possibles = Sets.difference(OBTAINABLE, exclude);
-            Item[] items = new Item[possibles.size()];
-            items = possibles.toArray(items);
-
-            return items[random.nextInt(items.length)];
         }
+
+        Set<Item> possibles = Sets.difference(OBTAINABLE, exclude);
+
+        if (possibles.isEmpty()) {
+            return OBTAINABLE_ARRAY[random.nextInt(OBTAINABLE_ARRAY.length)];
+        }
+
+        return possibles.toArray(new Item[0])[random.nextInt(possibles.size())];
     }
 
     public static void buildObtainableSet(MinecraftServer server) {
@@ -81,8 +83,7 @@ public class ItemUtil {
             }
         });
 
-        OBTAINABLE_ARRAY = new Item[OBTAINABLE.size()];
-        OBTAINABLE_ARRAY = OBTAINABLE.toArray(OBTAINABLE_ARRAY);
+        OBTAINABLE_ARRAY = OBTAINABLE.toArray(new Item[0]);
         isObtainableSetBuilt = true;
     }
 }

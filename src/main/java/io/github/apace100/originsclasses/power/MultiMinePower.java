@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class MultiMinePower extends Power {
-
     private final BlockStateVariantMap.TriFunction<LivingEntity, BlockState, BlockPos, List<BlockPos>> affectedBlocksFunction;
     private final Predicate<BlockState> isBlockStateAffected;
 
-    public MultiMinePower(PowerType<?> type, LivingEntity entity, BlockStateVariantMap.TriFunction<LivingEntity, BlockState, BlockPos, List<BlockPos>> affectedBlocksFuntion, Predicate<BlockState> isBlockStateAffected) {
+    public MultiMinePower(PowerType<?> type, LivingEntity entity, BlockStateVariantMap.TriFunction<LivingEntity, BlockState, BlockPos, List<BlockPos>> affectedBlocksFunction, Predicate<BlockState> isBlockStateAffected) {
         super(type, entity);
-        this.affectedBlocksFunction = affectedBlocksFuntion;
+
+        this.affectedBlocksFunction = affectedBlocksFunction;
         this.isBlockStateAffected = isBlockStateAffected;
     }
 
