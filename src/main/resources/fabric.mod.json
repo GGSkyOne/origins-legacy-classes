@@ -1,39 +1,37 @@
 {
-  "schemaVersion": 1,
-  "id": "origins-classes",
-  "version": "${version}",
-
-  "name": "Origins: Classes",
-  "description": "An add-on for the Origins mod which adds classes to the game.",
-  "authors": [
-    "Apace"
-  ],
-  "contact": {
-    "homepage": "https://apace100.github.io/origins-classes",
-    "sources": "https://github.com/apace100/origins-classes"
-  },
-
-  "license": "MIT",
-  "icon": "assets/origins-classes/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "io.github.apace100.originsclasses.OriginsClasses"
+    "schemaVersion": 1,
+    "id": "origins-legacy-classes",
+    "version": "${version}",
+    "name": "Origins Legacy: Classes",
+    "description": "An add-on for Origins: Legacy which adds classes to the game. Unofficial port of Origins: Classes for modern Minecraft.",
+    "authors": [
+        "Apace",
+        "GGSkyOne"
     ],
-    "client": [
-      "io.github.apace100.originsclasses.OriginsClassesClient"
-    ]
-  },
-  "mixins": [
-    "origins-classes.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": "*",
-    "fabric": "*",
-    "minecraft": ">=1.20",
-    "origins": ">=1.10.0",
-    "java": ">=17"
-  }
+    "contact": {
+        "homepage": "https://modrinth.com/mod/origins-legacy-classes",
+        "sources": "https://github.com/GGSkyOne/origins-legacy-classes",
+        "issues": "https://github.com/GGSkyOne/origins-legacy-classes/issues"
+    },
+    "license": "MIT",
+    "icon": "assets/origins-classes/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "io.github.apace100.originsclasses.OriginsClasses"
+        ],
+        "client": [
+            "io.github.apace100.originsclasses.OriginsClassesClient"
+        ]
+    },
+    "mixins": [
+        "origins-classes.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": "*",
+        "minecraft": ">=1.21.1",
+        "java": ">=21",
+        "fabric-api": "*",
+        "origins-legacy": ">=1.10.0"
+    }
 }
