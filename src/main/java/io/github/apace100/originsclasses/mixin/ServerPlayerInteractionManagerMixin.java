@@ -1,7 +1,7 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
-import io.github.apace100.originsclasses.ducks.SneakingStateSavingManager;
+import io.github.apace100.originsclasses.ducks.BlockBreakSneakState;
 import io.github.apace100.originsclasses.networking.ClassesPackets;
 import io.github.apace100.originsclasses.power.MultiMinePower;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerInteractionManager.class)
-public abstract class ServerPlayerInteractionManagerMixin implements SneakingStateSavingManager {
+public abstract class ServerPlayerInteractionManagerMixin implements BlockBreakSneakState {
     @Shadow protected ServerWorld world;
     @Shadow @Final protected ServerPlayerEntity player;
 

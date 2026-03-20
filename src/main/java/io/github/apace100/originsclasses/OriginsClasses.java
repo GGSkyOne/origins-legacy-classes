@@ -15,8 +15,8 @@ public class OriginsClasses implements ModInitializer {
 		NamespaceAlias.addAlias(MODID, "apoli");
 
 		ClassesComponents.register();
+		ClassesEffects.register();
 		ClassesPackets.registerPayloads();
 		ClassesPowerFactories.register();
-		ClassesEffects.register();
 	}
 }
