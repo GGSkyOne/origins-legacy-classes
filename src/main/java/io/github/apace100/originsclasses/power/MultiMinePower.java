@@ -3,7 +3,6 @@ package io.github.apace100.originsclasses.power;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import net.minecraft.block.BlockState;
-import net.minecraft.data.client.BlockStateVariantMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 
@@ -11,10 +10,15 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class MultiMinePower extends Power {
-    private final BlockStateVariantMap.TriFunction<LivingEntity, BlockState, BlockPos, List<BlockPos>> affectedBlocksFunction;
+    @FunctionalInterface
+    public interface TriFunction<A, B, C, R> {
+        R apply(A a, B b, C c);
+    }
+
+    private final TriFunction<LivingEntity, BlockState, BlockPos, List<BlockPos>> affectedBlocksFunction;
     private final Predicate<BlockState> isBlockStateAffected;
 
-    public MultiMinePower(PowerType<?> type, LivingEntity entity, BlockStateVariantMap.TriFunction<LivingEntity, BlockState, BlockPos, List<BlockPos>> affectedBlocksFunction, Predicate<BlockState> isBlockStateAffected) {
+    public MultiMinePower(PowerType<?> type, LivingEntity entity, TriFunction<LivingEntity, BlockState, BlockPos, List<BlockPos>> affectedBlocksFunction, Predicate<BlockState> isBlockStateAffected) {
         super(type, entity);
 
         this.affectedBlocksFunction = affectedBlocksFunction;

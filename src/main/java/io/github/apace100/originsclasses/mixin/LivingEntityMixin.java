@@ -6,17 +6,22 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.context.LootWorldContext;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.function.Consumer;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -26,20 +31,22 @@ public abstract class LivingEntityMixin extends Entity {
 
     @SuppressWarnings("ConstantValue")
     @Inject(
-        method = "dropLoot",
+        method = "generateLoot",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;JLjava/util/function/Consumer;)V"
+            target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootWorldContext;JLjava/util/function/Consumer;)V"
         )
     )
-    private void dropAdditionalRancherLoot(DamageSource damageSource, boolean causedByPlayer, CallbackInfo ci, @Local LootTable lootTable, @Local LootContextParameterSet lootContextParameterSet) {
+    private void dropAdditionalRancherLoot(ServerWorld world, DamageSource damageSource, boolean causedByPlayer, RegistryKey<LootTable> lootTableKey, Consumer<ItemStack> lootConsumer, CallbackInfo ci, @Local LootTable lootTable, @Local LootWorldContext lootContextParameterSet) {
         if (
             causedByPlayer &&
             (Object)this instanceof AnimalEntity &&
             ClassesPowerTypes.MORE_ANIMAL_LOOT.isActive(damageSource.getAttacker())
         ) {
-            if (this.random.nextInt(10) < 3) {
-                lootTable.generateLoot(lootContextParameterSet, ((LivingEntity)(Object)this)::dropStack);
+            if (this.getRandom().nextInt(10) < 3) {
+                lootTable
+                    .generateLoot(lootContextParameterSet)
+                    .forEach(stack -> this.dropStack(world, stack));
             }
         }
     }

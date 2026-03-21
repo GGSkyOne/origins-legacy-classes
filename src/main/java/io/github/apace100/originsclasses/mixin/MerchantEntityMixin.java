@@ -11,9 +11,9 @@ import net.minecraft.entity.passive.WanderingTraderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.Registries;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
 import net.minecraft.village.TradedItem;
@@ -75,29 +75,18 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
         }
     }
 
-    @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
-    private void writeAdditionalOffersToTag(NbtCompound tag, CallbackInfo ci) {
+    @Inject(method = "writeCustomData", at = @At("HEAD"))
+    private void writeAdditionalOffersToTag(WriteView view, CallbackInfo ci) {
         if (additionalOffers != null) {
-            TradeOfferList.CODEC
-                .encodeStart(NbtOps.INSTANCE, additionalOffers)
-                .result()
-                .ifPresent(nbt -> {
-                    tag.put("AdditionalOffers", nbt);
-                    tag.putInt("OfferCountNoAdditional", offerCountWithoutAdditional);
-                });
+            view.put("AdditionalOffers", TradeOfferList.CODEC, additionalOffers);
+            view.putInt("OfferCountNoAdditional", offerCountWithoutAdditional);
         }
     }
 
-    @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
-    private void readAdditionalOffersFromTag(NbtCompound tag, CallbackInfo ci) {
-        if (tag.contains("AdditionalOffers")) {
-            TradeOfferList.CODEC
-                .parse(NbtOps.INSTANCE, tag.get("AdditionalOffers"))
-                .result()
-                .ifPresent(list -> additionalOffers = list);
-
-            offerCountWithoutAdditional = tag.getInt("OfferCountNoAdditional");
-        }
+    @Inject(method = "readCustomData", at = @At("HEAD"))
+    private void readAdditionalOffersFromTag(ReadView view, CallbackInfo ci) {
+        view.read("AdditionalOffers", TradeOfferList.CODEC).ifPresent(list -> additionalOffers = list);
+        offerCountWithoutAdditional = view.getOptionalInt("OfferCountNoAdditional").orElse(0);
     }
 
     @Unique

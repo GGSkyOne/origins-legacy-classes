@@ -28,7 +28,6 @@
         "MerchantEntityMixin",
         "MiningToolItemMixin",
         "PlayerEntityMixin",
-        "PotionItemMixin",
         "ProjectileEntityMixin",
         "RepairItemRecipeMixin",
         "ServerPlayerEntityMixin",
