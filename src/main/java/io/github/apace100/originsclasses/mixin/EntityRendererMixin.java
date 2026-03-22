@@ -1,30 +1,26 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.originsclasses.power.ClassesPowerTypes;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
-import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin {
-    @ModifyVariable(
-        method = "renderLabelIfPresent",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/util/math/MatrixStack;push()V"
-        ),
-        ordinal = 0
+    @Inject(
+        method = "getAndUpdateRenderState",
+        at = @At("RETURN")
     )
-    private boolean modifyUnsneakyState(boolean original, Entity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    @Environment(EnvType.CLIENT)
+    private void hideNameForSneaky(Entity entity, float tickProgress, CallbackInfoReturnable<EntityRenderState> cir) {
         if (ClassesPowerTypes.SNEAKY.isActive(entity)) {
-            return false;
+            cir.getReturnValue().displayName = null;
         }
-
-        return original;
     }
 }
