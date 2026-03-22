@@ -20,7 +20,7 @@ public class RepairItemRecipeMixin {
         )
     )
     private int doubleRepairDurabilityBonus(int original, CraftingRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
-        PlayerEntity player = CraftingContext.get();
+        PlayerEntity player = CraftingContext.getCraftingPlayer();
 
         if (player != null && ClassesPowerTypes.EFFICIENT_REPAIRS.isActive(player)) {
             return original * 3;

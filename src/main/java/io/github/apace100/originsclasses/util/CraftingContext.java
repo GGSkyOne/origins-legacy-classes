@@ -5,11 +5,11 @@ import net.minecraft.entity.player.PlayerEntity;
 public class CraftingContext {
     private static PlayerEntity craftingPlayer;
 
-    public static PlayerEntity get() {
+    public static PlayerEntity getCraftingPlayer() {
         return craftingPlayer;
     }
 
-    public static void set(PlayerEntity player) {
+    public static void setCraftingPlayer(PlayerEntity player) {
         craftingPlayer = player;
     }
 }
