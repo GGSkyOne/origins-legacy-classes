@@ -28,7 +28,7 @@ public class BlockBehaviourMixin {
         boolean processMultimine = false;
 
         if (player instanceof ServerPlayer) {
-            BlockBreakSneakState sneakingState = (BlockBreakSneakState)(Object)((ServerPlayer)player).gameMode;
+            BlockBreakSneakState sneakingState = (BlockBreakSneakState)((ServerPlayer)player).gameMode;
             processMultimine = !sneakingState.wasSneakingWhenBlockBreakingStarted();
         } else {
             processMultimine = ClassesPacketsS2C.isMultiMining();

@@ -6,15 +6,15 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
 import net.minecraft.resources.Identifier;
+import org.jspecify.annotations.NonNull;
 
 public class ClassesPackets {
     public record TraderTypePayload(boolean isWanderingTrader) implements CustomPacketPayload {
         public static final Type<TraderTypePayload> ID = new Type<>(Identifier.fromNamespaceAndPath(OriginsClasses.MODID, "trader_type"));
         public static final StreamCodec<FriendlyByteBuf, TraderTypePayload> CODEC = ByteBufCodecs.BOOL.map(TraderTypePayload::new, TraderTypePayload::isWanderingTrader).cast();
 
-        @Override
+        @Override @NonNull
         public Type<? extends CustomPacketPayload> type() {
             return ID;
         }
@@ -24,7 +24,7 @@ public class ClassesPackets {
         public static final Type<MultiMiningPayload> ID = new Type<>(Identifier.fromNamespaceAndPath(OriginsClasses.MODID, "multi_mining"));
         public static final StreamCodec<FriendlyByteBuf, MultiMiningPayload> CODEC = ByteBufCodecs.BOOL.map(MultiMiningPayload::new, MultiMiningPayload::isMultiMining).cast();
 
-        @Override
+        @Override @NonNull
         public Type<? extends CustomPacketPayload> type() {
             return ID;
         }
