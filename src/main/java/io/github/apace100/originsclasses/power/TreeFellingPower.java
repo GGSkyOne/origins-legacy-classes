@@ -4,13 +4,13 @@ import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.originsclasses.OriginsClasses;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.resources.Identifier;
+import net.minecraft.core.BlockPos;
 
 import java.util.*;
 
@@ -18,11 +18,11 @@ public class TreeFellingPower extends MultiMinePower {
     private static final int BLOCK_LIMIT = 255;
 
     public static final PowerFactory<TreeFellingPower> FACTORY = new PowerFactory<>(
-        Identifier.of(OriginsClasses.MODID, "tree_felling"),
+        Identifier.fromNamespaceAndPath(OriginsClasses.MODID, "tree_felling"),
         new SerializableData(),
         data -> (type, entity) -> {
             TreeFellingPower power = new TreeFellingPower(type, entity);
-            power.addCondition(e -> e instanceof LivingEntity l && l.getMainHandStack().getItem() instanceof AxeItem);
+            power.addCondition(e -> e instanceof LivingEntity l && l.getMainHandItem().getItem() instanceof AxeItem);
 
             return power;
         }
@@ -36,8 +36,8 @@ public class TreeFellingPower extends MultiMinePower {
 
             boolean foundOneWithLeaves = false;
 
-            BlockPos.Mutable pos = bp.mutableCopy();
-            BlockPos.Mutable newPos = bp.mutableCopy();
+            BlockPos.MutableBlockPos pos = bp.mutable();
+            BlockPos.MutableBlockPos newPos = bp.mutable();
 
             while (!queue.isEmpty()) {
                 pos.set(queue.remove());
@@ -50,10 +50,10 @@ public class TreeFellingPower extends MultiMinePower {
                             }
 
                             newPos.set(pos.getX() + dx, pos.getY() + dy, pos.getZ() + dz);
-                            BlockState state = pl.getEntityWorld().getBlockState(newPos);
+                            BlockState state = pl.level().getBlockState(newPos);
 
-                            if (state.isOf(bs.getBlock()) && !affected.contains(newPos)) {
-                                BlockPos savedNewPos = newPos.toImmutable();
+                            if (state.is(bs.getBlock()) && !affected.contains(newPos)) {
+                                BlockPos savedNewPos = newPos.immutable();
                                 affected.add(savedNewPos);
                                 queue.add(savedNewPos);
 
@@ -64,7 +64,7 @@ public class TreeFellingPower extends MultiMinePower {
 
                                     return new ArrayList<>(affected);
                                 }
-                            } else if (state.isIn(BlockTags.LEAVES) && !state.get(LeavesBlock.PERSISTENT)) {
+                            } else if (state.is(BlockTags.LEAVES) && !state.getValue(LeavesBlock.PERSISTENT)) {
                                 foundOneWithLeaves = true;
                             }
                         }
@@ -78,6 +78,6 @@ public class TreeFellingPower extends MultiMinePower {
 
             return new ArrayList<>(affected);
         },
-        state -> state.isIn(BlockTags.LOGS));
+        state -> state.is(BlockTags.LOGS));
     }
 }

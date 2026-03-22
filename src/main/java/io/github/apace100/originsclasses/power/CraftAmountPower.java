@@ -7,16 +7,16 @@ import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.apoli.util.modifier.Modifier;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.originsclasses.OriginsClasses;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 public class CraftAmountPower extends ValueModifyingPower {
     public static final PowerFactory<CraftAmountPower> FACTORY = new PowerFactory<>(
-        Identifier.of(OriginsClasses.MODID, "craft_amount"),
+        Identifier.fromNamespaceAndPath(OriginsClasses.MODID, "craft_amount"),
         new SerializableData()
             .add("item_condition", ApoliDataTypes.ITEM_CONDITION, null)
             .add("modifier", Modifier.DATA_TYPE, null)

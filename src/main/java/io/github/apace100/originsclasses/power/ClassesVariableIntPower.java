@@ -6,12 +6,12 @@ import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.apace100.originsclasses.OriginsClasses;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.resources.Identifier;
 
 public class ClassesVariableIntPower extends VariableIntPower {
     public static final PowerFactory<ClassesVariableIntPower> FACTORY = new PowerFactory<>(
-        Identifier.of(OriginsClasses.MODID, "variable_int"),
+        Identifier.fromNamespaceAndPath(OriginsClasses.MODID, "variable_int"),
         new SerializableData()
             .add("start_value", SerializableDataTypes.INT, null)
             .add("min", SerializableDataTypes.INT, Integer.MIN_VALUE)

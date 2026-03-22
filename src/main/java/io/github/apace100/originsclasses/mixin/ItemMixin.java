@@ -3,29 +3,31 @@ package io.github.apace100.originsclasses.mixin;
 import io.github.apace100.originsclasses.component.ClassesComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.Item.TooltipContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.TooltipContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.function.Consumer;
 
 @Mixin(Item.class)
 public abstract class ItemMixin {
-    @Inject(method = "appendTooltip", at = @At("HEAD"))
+    @Inject(method = "appendHoverText", at = @At("HEAD"))
     @Environment(EnvType.CLIENT)
-    private void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type, CallbackInfo ci) {
+    private void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> textConsumer, TooltipFlag type, CallbackInfo ci) {
         Integer foodBonus = stack.get(ClassesComponents.FOOD_BONUS);
 
         if (foodBonus != null) {
-            textConsumer.accept(Text.translatable("origins-classes.food_bonus", foodBonus).formatted(Formatting.GRAY));
+            textConsumer.accept(Component.translatable("origins-classes.food_bonus", foodBonus).withStyle(ChatFormatting.GRAY));
         }
 
         Float multiplier = stack.get(ClassesComponents.MINING_SPEED_MULTIPLIER);
@@ -34,11 +36,26 @@ public abstract class ItemMixin {
             int bonusInt = Math.round((multiplier - 1F) * 100);
 
             String bonus = bonusInt > 0 ? ("+" + bonusInt + "%") : (bonusInt + "%");
-            textConsumer.accept(Text.translatable("origins-classes.mining_speed_bonus", bonus).formatted(Formatting.BLUE));
+            textConsumer.accept(Component.translatable("origins-classes.mining_speed_bonus", bonus).withStyle(ChatFormatting.BLUE));
         }
 
         if (Boolean.TRUE.equals(stack.get(ClassesComponents.EXTENDED_BY_CLERIC))) {
-            textConsumer.accept(Text.translatable("origins-classes.longer_potions").formatted(Formatting.GOLD));
+            textConsumer.accept(Component.translatable("origins-classes.longer_potions").withStyle(ChatFormatting.GOLD));
+        }
+    }
+
+    @Inject(
+        method = "getDestroySpeed",
+        at = @At("RETURN"),
+        cancellable = true
+    )
+    private void applyDestroySpeedMultiplier(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> cir) {
+        if (stack != null) {
+            Float multiplier = stack.get(ClassesComponents.MINING_SPEED_MULTIPLIER);
+
+            if (multiplier != null) {
+                cir.setReturnValue(cir.getReturnValueF() * multiplier);
+            }
         }
     }
 }

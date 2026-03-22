@@ -1,15 +1,15 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.originsclasses.power.ClassesPowerTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.item.BoneMealItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,41 +22,41 @@ public class BoneMealItemMixin {
     private static boolean isFarmer = false;
 
     @Inject(
-        method = "useOnBlock",
+        method = "useOn",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/util/math/BlockPos;offset(Lnet/minecraft/util/math/Direction;)Lnet/minecraft/util/math/BlockPos;",
+            target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;",
             shift = At.Shift.AFTER
         )
     )
-    private void saveFarmerForLater(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
+    private void saveFarmerForLater(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         if (context.getPlayer() != null && ClassesPowerTypes.BETTER_BONE_MEAL.isActive(context.getPlayer())) {
             isFarmer = true;
         }
     }
 
     @Inject(
-        method = "useOnBlock",
+        method = "useOn",
         at = @At("RETURN")
     )
-    private void removeSavedFarmer(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
+    private void removeSavedFarmer(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         isFarmer = false;
     }
 
     @Inject(
-        method = "useOnFertilizable",
+        method = "growCrop",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/item/ItemStack;decrement(I)V"
+            target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"
         )
     )
-    private static void applyAdditionalFarmerBoneMeal(ItemStack stack, World world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+    private static void applyAdditionalFarmerBoneMeal(ItemStack stack, Level world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (isFarmer) {
             BlockState blockState = world.getBlockState(pos);
-            Fertilizable fertilizable = (Fertilizable)blockState.getBlock();
+            BonemealableBlock fertilizable = (BonemealableBlock)blockState.getBlock();
 
-            if (fertilizable.canGrow(world, world.getRandom(), pos, blockState)) {
-                fertilizable.grow((ServerWorld)world, world.getRandom(), pos, blockState);
+            if (fertilizable.isBonemealSuccess(world, world.getRandom(), pos, blockState)) {
+                fertilizable.performBonemeal((ServerLevel)world, world.getRandom(), pos, blockState);
             }
         }
     }

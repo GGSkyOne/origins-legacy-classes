@@ -1,29 +1,29 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.originsclasses.power.ClassesPowerTypes;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.AnvilScreenHandler;
-import net.minecraft.screen.ForgingScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.screen.slot.ForgingSlotsManager;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AnvilMenu;
+import net.minecraft.world.inventory.ItemCombinerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.ItemCombinerMenuSlotDefinition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin(AnvilScreenHandler.class)
-public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
-    @Shadow private static ForgingSlotsManager getForgingSlotsManager() {
+@Mixin(AnvilMenu.class)
+public abstract class AnvilMenuMixin extends ItemCombinerMenu {
+    @Shadow private static ItemCombinerMenuSlotDefinition createInputSlotDefinitions() {
         throw new AssertionError();
     }
 
-    public AnvilScreenHandlerMixin(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
-        super(type, syncId, playerInventory, context, getForgingSlotsManager());
+    public AnvilMenuMixin(MenuType<?> type, int syncId, Inventory playerInventory, ContainerLevelAccess context) {
+        super(type, syncId, playerInventory, context, createInputSlotDefinitions());
     }
 
     @ModifyConstant(
-        method = "updateResult",
+        method = "createResult",
         constant = @Constant(
             intValue = 4,
             ordinal = 0
@@ -38,7 +38,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     }
 
     @ModifyConstant(
-        method = "updateResult",
+        method = "createResult",
         constant = @Constant(
             intValue = 12,
             ordinal = 0

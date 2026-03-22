@@ -1,16 +1,16 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.originsclasses.power.ClassesPowerTypes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.Projectile;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(ProjectileEntity.class)
-public class ProjectileEntityMixin {
+@Mixin(Projectile.class)
+public class ProjectileMixin {
     @ModifyVariable(
-        method = "setVelocity(Lnet/minecraft/entity/Entity;FFFFF)V",
+        method = "shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V",
         at = @At("HEAD"),
         ordinal = 4,
         argsOnly = true

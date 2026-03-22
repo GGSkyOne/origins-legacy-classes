@@ -1,13 +1,13 @@
 package io.github.apace100.originsclasses.mixin;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.storage.loot.entries.TagEntry;
-import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.core.Holder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(TagEntry.class)
-public interface TagEntryAccessor {
+@Mixin(LootItem.class)
+public interface LootItemAccessor {
     @Accessor
-    TagKey<Item> getTag();
+    Holder<Item> getItem();
 }

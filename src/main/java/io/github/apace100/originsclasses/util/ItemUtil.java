@@ -2,22 +2,26 @@ package io.github.apace100.originsclasses.util;
 
 import com.google.common.collect.Sets;
 import io.github.apace100.originsclasses.mixin.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.entry.CombinedEntry;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.entry.LootPoolEntry;
-import net.minecraft.loot.entry.TagEntry;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
+import io.github.apace100.originsclasses.mixin.CompositeEntryBaseAccessor;
+import io.github.apace100.originsclasses.mixin.LootItemAccessor;
+import io.github.apace100.originsclasses.mixin.LootTableAccessor;
+import io.github.apace100.originsclasses.mixin.TagEntryAccessor;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.CompositeEntryBase;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.entries.TagEntry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 
 import java.util.*;
 
@@ -26,17 +30,17 @@ public class ItemUtil {
     private static Item[] OBTAINABLE_ARRAY;
     private static boolean isObtainableSetBuilt = false;
 
-    public static ItemStack createMerchantItemStack(Item item, Random random, World world) {
+    public static ItemStack createMerchantItemStack(Item item, RandomSource random, Level world) {
         ItemStack stack = new ItemStack(item);
 
-        if (stack.contains(DataComponentTypes.ENCHANTABLE) && random.nextFloat() < 0.5) {
-            EnchantmentHelper.enchant(random, stack, 1 + random.nextInt(30), world.getRegistryManager(), Optional.empty());
+        if (stack.has(DataComponents.ENCHANTABLE) && random.nextFloat() < 0.5) {
+            EnchantmentHelper.enchantItem(random, stack, 1 + random.nextInt(30), world.registryAccess(), Optional.empty());
         }
 
         return stack;
     }
 
-    public static Item getRandomObtainableItem(MinecraftServer server, Random random, Set<Item> exclude) {
+    public static Item getRandomObtainableItem(MinecraftServer server, RandomSource random, Set<Item> exclude) {
         buildObtainableSet(server);
 
         if (exclude == null || exclude.isEmpty()) {
@@ -57,29 +61,29 @@ public class ItemUtil {
             return;
         }
 
-        RegistryWrapper<LootTable> lootTableWrapper = (RegistryWrapper<LootTable>) server
-            .getReloadableRegistries()
-            .createRegistryLookup()
-            .getOrThrow(RegistryKeys.LOOT_TABLE);
+        HolderLookup<LootTable> lootTableWrapper = server
+            .reloadableRegistries()
+            .lookup()
+            .lookupOrThrow(Registries.LOOT_TABLE);
 
-        lootTableWrapper.streamEntries().forEach(entry -> {
+        lootTableWrapper.listElements().forEach(entry -> {
             LootTableAccessor table = (LootTableAccessor) entry.value();
             List<LootPool> pools = table.getPools();
-            Queue<LootPoolEntry> entryQueue = new LinkedList<>();
+            Queue<LootPoolEntryContainer> entryQueue = new LinkedList<>();
 
             for (LootPool pool : pools) {
                 entryQueue.addAll(pool.entries);
             }
 
             while (!entryQueue.isEmpty()) {
-                LootPoolEntry lootEntry = entryQueue.remove();
+                LootPoolEntryContainer lootEntry = entryQueue.remove();
 
-                if (lootEntry instanceof ItemEntry) {
-                    OBTAINABLE.add(((ItemEntryAccessor)lootEntry).getItem().value());
+                if (lootEntry instanceof LootItem) {
+                    OBTAINABLE.add(((LootItemAccessor)lootEntry).getItem().value());
                 } else if(lootEntry instanceof TagEntry) {
-                    OBTAINABLE.addAll(TagUtil.getAllEntries(Registries.ITEM, ((TagEntryAccessor)lootEntry).getName()));
-                } else if(lootEntry instanceof CombinedEntry) {
-                    entryQueue.addAll(((CombinedEntryAccessor)lootEntry).getChildren());
+                    OBTAINABLE.addAll(TagUtil.getAllEntries(BuiltInRegistries.ITEM, ((TagEntryAccessor)lootEntry).getTag()));
+                } else if(lootEntry instanceof CompositeEntryBase) {
+                    entryQueue.addAll(((CompositeEntryBaseAccessor)lootEntry).getChildren());
                 }
             }
         });

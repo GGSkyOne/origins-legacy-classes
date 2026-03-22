@@ -1,14 +1,14 @@
 package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.originsclasses.power.ClassesPowerTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.LockableContainerBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.recipe.AbstractCookingRecipe;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,17 +17,17 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
-public abstract class AbstractFurnaceBlockEntityMixin extends LockableContainerBlockEntity {
+public abstract class AbstractFurnaceBlockEntityMixin extends BaseContainerBlockEntity {
     @Unique
-    private static PlayerEntity playerTakingStacks;
+    private static Player playerTakingStacks;
 
     protected AbstractFurnaceBlockEntityMixin(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
 
 
-    @Inject(method = "dropExperienceForRecipesUsed", at = @At("HEAD"))
-    private void savePlayerForLater(ServerPlayerEntity player, CallbackInfo ci) {
+    @Inject(method = "awardUsedRecipesAndPopExperience", at = @At("HEAD"))
+    private void savePlayerForLater(ServerPlayer player, CallbackInfo ci) {
         if (getType() == BlockEntityType.SMOKER) {
             playerTakingStacks = player;
         }
@@ -37,11 +37,11 @@ public abstract class AbstractFurnaceBlockEntityMixin extends LockableContainerB
         method = "method_17761",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/recipe/AbstractCookingRecipe;getExperience()F"
+            target = "Lnet/minecraft/world/item/crafting/AbstractCookingRecipe;experience()F"
         )
     )
     private static float modifyExperienceGain(AbstractCookingRecipe abstractCookingRecipe) {
-        float regularXp = abstractCookingRecipe.getExperience();
+        float regularXp = abstractCookingRecipe.experience();
 
         if (playerTakingStacks != null) {
             if (ClassesPowerTypes.MORE_SMOKER_XP.isActive(playerTakingStacks)) {

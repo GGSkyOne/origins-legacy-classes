@@ -1,15 +1,15 @@
 package io.github.apace100.originsclasses.util;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class CraftingContext {
-    private static PlayerEntity craftingPlayer;
+    private static Player craftingPlayer;
 
-    public static PlayerEntity get() {
+    public static Player getCraftingPlayer() {
         return craftingPlayer;
     }
 
-    public static void set(PlayerEntity player) {
+    public static void setCraftingPlayer(Player player) {
         craftingPlayer = player;
     }
 }

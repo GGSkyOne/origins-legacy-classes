@@ -1,17 +1,17 @@
 package io.github.apace100.originsclasses.effect;
 
 import io.github.apace100.originsclasses.OriginsClasses;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
 
 public final class ClassesEffects {
-    public static RegistryEntry<StatusEffect> STEALTH;
+    public static Holder<MobEffect> STEALTH;
 
     public static void register() {
-        Registry.register(Registries.STATUS_EFFECT, Identifier.of(OriginsClasses.MODID, "stealth"), StealthEffect.INSTANCE);
-        STEALTH = Registries.STATUS_EFFECT.getEntry(StealthEffect.INSTANCE);
+        Registry.register(BuiltInRegistries.MOB_EFFECT, Identifier.fromNamespaceAndPath(OriginsClasses.MODID, "stealth"), StealthEffect.INSTANCE);
+        STEALTH = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(StealthEffect.INSTANCE);
     }
 }
