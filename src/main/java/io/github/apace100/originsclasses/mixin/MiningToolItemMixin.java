@@ -21,8 +21,13 @@ public class MiningToolItemMixin {
             Float multiplier = stack.get(ClassesComponents.MINING_SPEED_MULTIPLIER);
 
             if (multiplier != null) {
-                cir.setReturnValue(cir.getReturnValueF() * multiplier);
+                float base = cir.getReturnValueF();
+
+                if (base > 1.0F) {
+                    cir.setReturnValue(base * multiplier);
+                }
             }
         }
     }
 }
+
