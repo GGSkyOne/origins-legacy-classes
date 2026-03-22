@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.food.FoodProperties;
@@ -126,7 +127,7 @@ public class CraftingMenuMixin {
                 ),
                 EquipmentSlotGroup.bySlot(equippable.slot())
             );
-        } else if (item.components().has(DataComponents.TOOL) || item instanceof ShearsItem) {
+        } else if ((item.components().has(DataComponents.TOOL) || item instanceof ShearsItem) && !stack.is(ItemTags.SWORDS)) {
             stack.set(ClassesComponents.MINING_SPEED_MULTIPLIER, 1.05F);
         } else if (item.components().has(DataComponents.WEAPON) || item instanceof ProjectileWeaponItem) {
             addAttributeModifier(
