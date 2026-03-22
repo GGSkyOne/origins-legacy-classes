@@ -110,6 +110,7 @@ public class CraftingScreenHandlerMixin {
         Item item = stack.getItem();
 
         EquippableComponent equippable = item.getComponents().get(DataComponentTypes.EQUIPPABLE);
+
         if (equippable != null && isArmorSlot(equippable.slot())) {
             addAttributeModifier(
                 stack,
@@ -121,6 +122,8 @@ public class CraftingScreenHandlerMixin {
                 ),
                 AttributeModifierSlot.forEquipmentSlot(equippable.slot())
             );
+        } else if (item.getComponents().contains(DataComponentTypes.TOOL) || item instanceof ShearsItem) {
+            stack.set(ClassesComponents.MINING_SPEED_MULTIPLIER, 1.05F);
         } else if (item.getComponents().contains(DataComponentTypes.WEAPON) || item instanceof RangedWeaponItem) {
             addAttributeModifier(
                 stack,
@@ -132,8 +135,6 @@ public class CraftingScreenHandlerMixin {
                 ),
                 AttributeModifierSlot.MAINHAND
             );
-        } else if (item.getComponents().contains(DataComponentTypes.TOOL) || item instanceof ShearsItem) {
-            stack.set(ClassesComponents.MINING_SPEED_MULTIPLIER, 1.05F);
         } else if (item instanceof ShieldItem) {
             addAttributeModifier(
                 stack,
