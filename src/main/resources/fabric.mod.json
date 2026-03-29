@@ -22,6 +22,9 @@
         ],
         "client": [
             "io.github.apace100.originsclasses.OriginsClassesClient"
+        ],
+        "appleskin": [
+            "io.github.apace100.originsclasses.compat.AppleSkinCompat"
         ]
     },
     "mixins": [
