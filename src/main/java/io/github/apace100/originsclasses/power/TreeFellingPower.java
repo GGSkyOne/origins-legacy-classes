@@ -64,7 +64,7 @@ public class TreeFellingPower extends MultiMinePower {
 
                                     return new ArrayList<>(affected);
                                 }
-                            } else if (state.is(BlockTags.LEAVES) && !state.getValue(LeavesBlock.PERSISTENT)) {
+                            } else if ((state.is(BlockTags.LEAVES) && !state.getValue(LeavesBlock.PERSISTENT)) || state.is(BlockTags.WART_BLOCKS)) {
                                 foundOneWithLeaves = true;
                             }
                         }
