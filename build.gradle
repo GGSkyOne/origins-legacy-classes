@@ -37,6 +37,9 @@ repositories {
 	maven {
 		url = "https://maven.terraformersmc.com/"
 	}
+    maven {
+        url = "https://maven.ryanliptak.com/"
+    }
 }
 
 dependencies {
@@ -49,6 +52,10 @@ dependencies {
 
 	modImplementation "xyz.bluspring:Apoli-Legacy:${project.apoli_version}"
 	modImplementation "xyz.bluspring:Calio-Legacy:${project.calio_version}"
+
+    modCompileOnly("squeek.appleskin:appleskin-fabric:${project.appleskin_version}") {
+        transitive = false
+    }
 }
 
 processResources {
