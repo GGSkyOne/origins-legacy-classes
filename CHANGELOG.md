@@ -1,0 +1,21 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+---
+
+## [1.7.1] - 2026-03-29
+
+### Added
+- AppleSkin compatibility. Food crafted by Cook now correctly displays it's bonus hunger and saturation in the tooltip and hunger bar ([#79](https://github.com/apace100/origins-classes/issues/79))
+- Rogue stealth now suppresses sculk sensor activation, consistent with the existing sound suppression ([#71](https://github.com/apace100/origins-classes/issues/71))
+
+### Fixed
+- Lumberjack tree felling now works on crimson and warped trees ([#63](https://github.com/apace100/origins-classes/issues/63))
+- Rogue stealth no longer suppresses block break particles
+
+---
+
+## [1.7.0] - 2026-03-23
+
+- Initial release
