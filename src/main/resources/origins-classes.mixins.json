@@ -23,6 +23,7 @@
         "CraftingMenuMixin",
         "EnchantmentHelperMixin",
         "EnchantmentMenuMixin",
+        "EntityMixin",
         "LivingEntityMixin",
         "LootItemAccessor",
         "LootTableAccessor",
