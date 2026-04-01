@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.7.1] - 2026-03-29
+## [1.7.1] - 2026-04-01
 
 ### Added
 - AppleSkin compatibility. Food crafted by Cook now correctly displays it's bonus hunger and saturation in the tooltip and hunger bar ([#79](https://github.com/apace100/origins-classes/issues/79))
