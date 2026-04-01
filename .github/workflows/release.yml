@@ -33,7 +33,7 @@ jobs:
           echo "Mod version   : $MOD_VERSION"
           echo "Gradle version: $GRADLE_VERSION"
 
-          if [ "$FULL_VERSION" != "$GRADLE_VERSION" ]; then
+          if [ "$MOD_VERSION" != "$GRADLE_VERSION" ]; then
             echo "::error::Mod version from tag ($MOD_VERSION) does not match mod_version in gradle.properties ($GRADLE_VERSION)"
             exit 1
           fi
