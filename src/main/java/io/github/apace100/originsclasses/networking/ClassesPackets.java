@@ -7,6 +7,7 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 
 public class ClassesPackets {
     public record TraderTypePayload(boolean isWanderingTrader) implements CustomPayload {
@@ -29,8 +30,22 @@ public class ClassesPackets {
         }
     }
 
+    public record BlockBreakParticlesPayload(BlockPos pos, int rawStateId) implements CustomPayload {
+        public static final Id<BlockBreakParticlesPayload> ID = new Id<>(Identifier.of(OriginsClasses.MODID, "block_break_particles"));
+        public static final PacketCodec<PacketByteBuf, BlockBreakParticlesPayload> CODEC = PacketCodec.of(
+            (value, buf) -> { buf.writeBlockPos(value.pos()); buf.writeInt(value.rawStateId()); },
+            buf -> new BlockBreakParticlesPayload(buf.readBlockPos(), buf.readInt())
+        );
+
+        @Override
+        public Id<? extends CustomPayload> getId() {
+            return ID;
+        }
+    }
+
     public static void registerPayloads() {
         PayloadTypeRegistry.playS2C().register(TraderTypePayload.ID, TraderTypePayload.CODEC);
         PayloadTypeRegistry.playS2C().register(MultiMiningPayload.ID, MultiMiningPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(BlockBreakParticlesPayload.ID, BlockBreakParticlesPayload.CODEC);
     }
 }
