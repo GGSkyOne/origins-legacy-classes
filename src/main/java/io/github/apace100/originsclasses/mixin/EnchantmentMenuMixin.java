@@ -29,7 +29,7 @@ public class EnchantmentMenuMixin {
     }
 
     @Inject(
-        method = "method_17411",
+        method = "lambda$slotsChanged$0",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"
@@ -40,7 +40,7 @@ public class EnchantmentMenuMixin {
     }
 
     @Inject(
-        method = "method_17410",
+        method = "lambda$clickMenuButton$0",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"

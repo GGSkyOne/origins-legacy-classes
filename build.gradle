@@ -1,5 +1,5 @@
 plugins {
-	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
@@ -48,19 +48,15 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.layered() {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_snapshot}@zip")
-    }
 
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation "xyz.bluspring:Origins-Legacy:${project.origins_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    implementation "xyz.bluspring:Origins-Legacy:${project.origins_version}"
 
-	modImplementation "xyz.bluspring:Apoli-Legacy:${project.apoli_version}"
-	modImplementation "xyz.bluspring:Calio-Legacy:${project.calio_version}"
+    implementation "xyz.bluspring:Apoli-Legacy:${project.apoli_version}"
+    implementation "xyz.bluspring:Calio-Legacy:${project.calio_version}"
 
-	modCompileOnly("squeek.appleskin:appleskin-fabric:${project.appleskin_version}") {
+	compileOnly("squeek.appleskin:appleskin-fabric:${project.appleskin_version}") {
 		transitive = false
 	}
 }
@@ -74,14 +70,14 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {

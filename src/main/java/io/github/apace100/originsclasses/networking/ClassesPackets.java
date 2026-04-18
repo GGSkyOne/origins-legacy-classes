@@ -45,8 +45,8 @@ public class ClassesPackets {
     }
 
     public static void registerPayloads() {
-        PayloadTypeRegistry.playS2C().register(TraderTypePayload.ID, TraderTypePayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(MultiMiningPayload.ID, MultiMiningPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(BlockBreakParticlesPayload.ID, BlockBreakParticlesPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(TraderTypePayload.ID, TraderTypePayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(MultiMiningPayload.ID, MultiMiningPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(BlockBreakParticlesPayload.ID, BlockBreakParticlesPayload.CODEC);
     }
 }

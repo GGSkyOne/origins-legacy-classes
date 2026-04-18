@@ -34,7 +34,7 @@ public abstract class AbstractFurnaceBlockEntityMixin extends BaseContainerBlock
     }
 
     @Redirect(
-        method = "method_17761",
+        method = "lambda$getRecipesToAwardAndPopExperience$0",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/item/crafting/AbstractCookingRecipe;experience()F"
