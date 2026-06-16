@@ -34,7 +34,7 @@ public final class EntityUtil {
             AttributeInstance inst = entity.getAttribute(attribute);
 
             if (inst != null) {
-                inst.addPermanentModifier(new AttributeModifier(id, amount, operation));
+                inst.addOrReplacePermanentModifier(new AttributeModifier(id, amount, operation));
             }
         }
     }
