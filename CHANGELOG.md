@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.7.2] - 2026-07-18
+
+### Changed
+- Beastmaster's animals now heal to full health when tamed, so they no longer sit below their increased maximum health
+
+### Fixed
+- Fixed a client crash when a Beastmaster's tamed parrot perched on the player's shoulder ([#1](https://github.com/GGSkyOne/origins-legacy-classes/issues/1))
+
+---
+
 ## [1.7.1] - 2026-04-01
 
 ### Added
