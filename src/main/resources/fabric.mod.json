@@ -36,5 +36,8 @@
         "java": ">=21",
         "fabric-api": "*",
         "origins-legacy": ">=1.11.1"
+    },
+    "breaks": {
+        "origins-legacy": ">=2.0.0"
     }
 }
