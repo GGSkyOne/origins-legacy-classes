@@ -14,28 +14,39 @@ public final class EntityUtil {
     private static final double BEASTMASTER_ATTACK_BONUS = 1.5;
 
     public static void addBeastmasterAttributes(LivingEntity entity) {
-        applyModifier(
+        boolean healthApplied = applyModifier(
             entity,
             EntityAttributes.GENERIC_MAX_HEALTH,
             Identifier.of(OriginsClasses.MODID, "beastmaster_health"),
-            BEASTMASTER_HEALTH_BONUS, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+            BEASTMASTER_HEALTH_BONUS,
+            EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
         );
 
         applyModifier(
             entity,
             EntityAttributes.GENERIC_ATTACK_DAMAGE,
             Identifier.of(OriginsClasses.MODID, "beastmaster_attack"),
-            BEASTMASTER_ATTACK_BONUS, EntityAttributeModifier.Operation.ADD_VALUE
+            BEASTMASTER_ATTACK_BONUS,
+            EntityAttributeModifier.Operation.ADD_VALUE
         );
+
+        if (healthApplied) {
+            entity.setHealth(entity.getMaxHealth());
+        }
     }
 
-    private static void applyModifier(LivingEntity entity, RegistryEntry<EntityAttribute> attribute, Identifier id, double amount, EntityAttributeModifier.Operation operation) {
+    private static boolean applyModifier(LivingEntity entity, RegistryEntry<EntityAttribute> attribute, Identifier id, double amount, EntityAttributeModifier.Operation operation) {
         if (entity.getAttributes().hasAttribute(attribute)) {
             EntityAttributeInstance inst = entity.getAttributeInstance(attribute);
 
             if (inst != null) {
+                boolean wasPresent = inst.hasModifier(id);
                 inst.addPersistentModifier(new EntityAttributeModifier(id, amount, operation));
+
+                return !wasPresent;
             }
         }
+
+        return false;
     }
 }
