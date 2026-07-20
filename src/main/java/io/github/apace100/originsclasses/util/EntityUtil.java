@@ -7,6 +7,7 @@ import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
 public final class EntityUtil {
@@ -30,8 +31,8 @@ public final class EntityUtil {
             EntityAttributeModifier.Operation.ADD_VALUE
         );
 
-        if (healthApplied) {
-            entity.setHealth(entity.getMaxHealth());
+        if (healthApplied && entity.getWorld() instanceof ServerWorld world) {
+            world.getServer().execute(() -> entity.setHealth(entity.getMaxHealth()));
         }
     }
 
@@ -41,7 +42,7 @@ public final class EntityUtil {
 
             if (inst != null) {
                 boolean wasPresent = inst.hasModifier(id);
-                inst.addPersistentModifier(new EntityAttributeModifier(id, amount, operation));
+                inst.overwritePersistentModifier(new EntityAttributeModifier(id, amount, operation));
 
                 return !wasPresent;
             }
