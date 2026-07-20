@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.7.2] - 2026-07-18
+## [1.7.2] - 2026-07-20
 
 ### Changed
 - Beastmaster's animals now heal to full health when tamed, so they no longer sit below their increased maximum health
