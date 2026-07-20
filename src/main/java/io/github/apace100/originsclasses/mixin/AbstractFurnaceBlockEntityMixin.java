@@ -4,6 +4,7 @@ import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
@@ -28,7 +29,7 @@ public abstract class AbstractFurnaceBlockEntityMixin extends BaseContainerBlock
 
     @Inject(method = "awardUsedRecipesAndPopExperience", at = @At("HEAD"))
     private void savePlayerForLater(ServerPlayer player, CallbackInfo ci) {
-        if (getType() == BlockEntityType.SMOKER) {
+        if (getType() == BlockEntityTypes.SMOKER) {
             playerTakingStacks = player;
         }
     }

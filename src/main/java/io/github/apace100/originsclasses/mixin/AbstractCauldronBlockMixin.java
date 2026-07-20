@@ -55,7 +55,7 @@ public abstract class AbstractCauldronBlockMixin {
                     List<MobEffectInstance> customPotion = srcEffects.stream()
                         .map(effect -> new MobEffectInstance(
                             effect.getEffect(),
-                            effect.getDuration() * (effect.getEffect().value().isInstantenous() ? 1 : 2),
+                            effect.getDuration() * (effect.getEffect().value().isInstantaneous() ? 1 : 2),
                             effect.getAmplifier(),
                             effect.isAmbient(),
                             effect.isVisible(),
