@@ -16,7 +16,6 @@ import net.minecraft.world.level.storage.loot.entries.CompositeEntryBase;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.TagEntry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.server.MinecraftServer;
@@ -81,7 +80,7 @@ public class ItemUtil {
                 if (lootEntry instanceof LootItem) {
                     OBTAINABLE.add(((LootItemAccessor)lootEntry).getItem().value());
                 } else if(lootEntry instanceof TagEntry) {
-                    OBTAINABLE.addAll(TagUtil.getAllEntries(BuiltInRegistries.ITEM, ((TagEntryAccessor)lootEntry).getTag()));
+                    ((TagEntryAccessor)lootEntry).getTag().forEach(holder -> OBTAINABLE.add(holder.value()));
                 } else if(lootEntry instanceof CompositeEntryBase) {
                     entryQueue.addAll(((CompositeEntryBaseAccessor)lootEntry).getChildren());
                 }

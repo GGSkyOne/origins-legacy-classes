@@ -6,7 +6,7 @@ import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.originsclasses.OriginsClasses;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.AxeItem;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.resources.Identifier;
@@ -22,7 +22,7 @@ public class TreeFellingPower extends MultiMinePower {
         new SerializableData(),
         data -> (type, entity) -> {
             TreeFellingPower power = new TreeFellingPower(type, entity);
-            power.addCondition(e -> e instanceof LivingEntity l && l.getMainHandItem().getItem() instanceof AxeItem);
+            power.addCondition(e -> e instanceof LivingEntity l && l.getMainHandItem().is(ItemTags.AXES));
 
             return power;
         }

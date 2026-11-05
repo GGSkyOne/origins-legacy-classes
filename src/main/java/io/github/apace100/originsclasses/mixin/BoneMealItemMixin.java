@@ -2,6 +2,7 @@ package io.github.apace100.originsclasses.mixin;
 
 import io.github.apace100.originsclasses.power.ClassesPowerTypes;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
@@ -55,8 +56,8 @@ public class BoneMealItemMixin {
             BlockState blockState = world.getBlockState(pos);
             BonemealableBlock fertilizable = (BonemealableBlock)blockState.getBlock();
 
-            if (fertilizable.isBonemealSuccess(world, world.getRandom(), pos, blockState)) {
-                fertilizable.performBonemeal((ServerLevel)world, world.getRandom(), pos, blockState);
+            if (fertilizable.isBonemealSuccess(world, world.getRandom(), pos, blockState, BonemealSource.INTERACTION)) {
+                fertilizable.performBonemeal((ServerLevel)world, world.getRandom(), pos, blockState, BonemealSource.INTERACTION);
             }
         }
     }

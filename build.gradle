@@ -44,8 +44,11 @@ repositories {
 	maven {
 		url = "https://maven.terraformersmc.com/"
 	}
-	maven {
-		url = "https://maven.ryanliptak.com/"
+}
+
+configurations.configureEach {
+	resolutionStrategy.dependencySubstitution {
+		substitute module("de.dafuqs:additionalentityattributes") using module("maven.modrinth:additionalentityattributes:${project.aea_version}")
 	}
 }
 
@@ -59,7 +62,7 @@ dependencies {
     implementation "xyz.bluspring:Apoli-Legacy:${project.apoli_version}"
     implementation "xyz.bluspring:Calio-Legacy:${project.calio_version}"
 
-	compileOnly("squeek.appleskin:appleskin-fabric:${project.appleskin_version}") {
+	compileOnly("maven.modrinth:appleskin:${project.appleskin_version}") {
 		transitive = false
 	}
 }

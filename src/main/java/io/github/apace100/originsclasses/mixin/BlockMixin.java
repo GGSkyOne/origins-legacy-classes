@@ -5,10 +5,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,7 +22,7 @@ import static net.minecraft.world.level.block.Block.dropResources;
 @Mixin(Block.class)
 public class BlockMixin {
     @Inject(method = "playerDestroy", at = @At("TAIL"))
-    private void dropAdditionalCrops(Level world, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack, CallbackInfo ci) {
+    private void dropAdditionalCrops(ServerLevel world, ServerPlayer player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack, CallbackInfo ci) {
         if (state.getBlock() instanceof CropBlock || state.is(Blocks.MELON)) {
             if (player != null && ClassesPowerTypes.MORE_CROP_DROPS.isActive(player) && world.getRandom().nextInt(10) < 3) {
                 dropResources(state, world, pos, blockEntity, player, stack);
@@ -36,7 +36,7 @@ public class BlockMixin {
             floatValue = 0.005F
         )
     )
-    private float preventBlockMiningExhaustion(float exhaustion, Level world, Player playerEntity) {
+    private float preventBlockMiningExhaustion(float exhaustion, ServerLevel world, ServerPlayer playerEntity) {
         if (ClassesPowerTypes.NO_MINING_EXHAUSTION.isActive(playerEntity)) {
             return 0F;
         }
